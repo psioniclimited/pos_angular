@@ -1,0 +1,70 @@
+<p-card>
+  <p-table
+    #dt
+    [columns]="cols"
+    [value]="feeTypes"
+    [lazy]="true"
+    (onLazyLoad)="loadFeeTypesLazy($event)"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10,20,30]"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [responsive]="true">
+
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <i id="searchIcon" class="pi pi-search"></i>
+        <input type="text" pInputText size="30" placeholder="Global Filter"
+               (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" >
+          <span class="ui-column-title">{{col.header}}</span>
+          {{rowData[col.field]}}
+        </td>
+        <td>
+          <span class="ui-column-title">Action</span>
+<!--          <button class="submit-color" name="basic" pButton type="button" icon="pi pi-pencil" (click)="editFeeType(rowData.id)"></button>-->
+          <a [routerLink]="['/fee-types/' + rowData.id + '/edit']">
+            <button class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-pencil" label="Edit"></button>
+          </a>
+          <button *ngIf="rowData.immutable == 0" id="table-delete" class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-trash" (click)="showDeleteDialog(rowData.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+      <p style="font-weight: normal; float: left">Showing {{from}} - {{to}} of {{totalRecords}} records</p>
+    </ng-template>
+  </p-table>
+</p-card>
+
+<p-dialog [closable]="false" header="Delete Fee Type" [(visible)]="deleteDisplay" [modal]="true" [responsive]="true"
+          [width]="500" [minWidth]="200" [minY]="70"
+          [maximizable]="true" [baseZIndex]="10000" appendTo="body">
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <div class="ui-inputgroup">
+        Are you sure you want to delete this fee type?
+      </div>
+      <!--<small>*All bill collections corresponding to this customer will be deleted as well.</small>-->
+    </div>
+  </div>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-check" (click)="onDeleteSubmit()" label="Confirm"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="closeDeleteDialog()" label="Cancel"
+            class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>

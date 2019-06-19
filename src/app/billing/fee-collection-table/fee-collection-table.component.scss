@@ -1,0 +1,52 @@
+p-splitButton{
+  float: left;
+}
+
+.custombar2 .ui-scrollpanel-wrapper {
+  border-right: 9px solid #757575;
+  border-bottom: 9px solid #757575;
+}
+
+.custombar2 .ui-scrollpanel-bar {
+  background-color: #68C77D;
+  border-radius: 0;
+  opacity: 1;
+  transition: background-color .3s;
+}
+
+.custombar2:hover .ui-scrollpanel-bar {
+  background-color: #46A55A;
+}
+
+//.ui-button {
+//  margin: 4px 4px;
+//  //padding: 4px;
+//  border-radius: 0.25rem;
+//  width: auto;
+//  //height: fit-content;
+//}
+
+.ui-inputgroup-addon{
+  width: 8em;
+}
+
+.ui-widget:disabled{
+  text-align: right;
+  opacity: 0.8;
+}
+
+.hide-refund{
+  display: none;
+}
+
+button .ui-button.ui-button-text-only .ui-button-text {
+  padding: 0.429em 0.6em;
+}
+
+.dateFilter-button {
+  margin: 0 0 0 3px;
+}
+
+p-calendar{
+  width: 100%;
+}

@@ -1,0 +1,13 @@
+<p-card>
+  <h3 class="first">Permissions</h3>
+  <div class="ui-g" style="margin-bottom:10px">
+    <div class="ui-lg-3 ui-md-4 ui-g-6" *ngFor="let permission of permissions">
+      <p-checkbox
+        name="group1"
+        value="{{permission.id}}"
+        label="{{permission.display_name}}"
+        [(ngModel)]="selectedPermissions"></p-checkbox>
+    </div>
+  </div>
+  <button class="submit-color" pButton type="submit" (click)="getSelectedPermissions()" label="Update Permissions"></button>
+</p-card>

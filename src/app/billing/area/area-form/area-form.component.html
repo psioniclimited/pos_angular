@@ -1,0 +1,35 @@
+<form class="container ui-fluid" [formGroup]="areaForm" (ngSubmit)="onSubmit()" >
+  <h4 *ngIf="id;else create_area" for="name">Edit Area</h4>
+  <ng-template #create_area><h4>Create Area</h4></ng-template>
+  <hr>
+  <div class="ui-g form-group ">
+    <div class="ui-md-12 ui-g-12 ">
+      <label for="name">Name</label>
+      <input type="text" id="name"
+             pInputText placeholder="Enter name"
+             formControlName="name"
+             name="name"
+             >
+      <small *ngIf="!areaForm.controls['name'].valid && areaForm.controls['name'].touched">
+        Area name is required
+      </small>
+    </div>
+
+    <div class="ui-g-12 ui-md-12 ui-lg-12">
+      <label for="description">Description</label>
+      <textarea
+        [rows]="5"
+        [cols]="30"
+        pInputTextarea
+        id="description"
+        placeholder="Enter Description"
+        formControlName="description"
+        ></textarea>
+      <small *ngIf="!areaForm.controls['description'].valid && areaForm.controls['description'].touched">
+        Area description is required
+      </small>
+    </div>
+    <button class="" name="basic" pButton type="submit"  label="Submit"></button>
+    <button class="ui-button-secondary" name="basic" pButton type="button" label="Cancel" (click)="displayDialogFalse(); markFieldsAsNotTouched()"></button>
+  </div>
+</form>

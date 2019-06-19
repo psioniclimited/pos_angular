@@ -1,0 +1,76 @@
+  <form class="ui-g ui-fluid" [formGroup]="complainForm" (ngSubmit)="onSubmit()" >
+    <p-card class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+    <h4>Complaint Form</h4>
+    <hr>
+    <div class="ui-g form-group">
+      <div class="ui-md-6 ui-g-12 ">
+        <label>Date</label>
+        <p-calendar
+          id="date"
+          type="text"
+          placeholder="Enter date"
+          formControlName="date"
+          [showIcon]="true"
+          ></p-calendar>
+        <small *ngIf="!complainForm.controls['date'].valid && complainForm.controls['date'].touched">
+          Date is required
+        </small>
+      </div>
+
+      <div class=" ui-md-6 ui-g-12">
+        <label >Complain Status</label>
+        <p-dropdown [options]="complainStatuses"
+                    placeholder="Select complain status"
+                    optionLabel="name"
+                    [showClear]="true"
+                    [style]="{'width':'100%'}"
+                    formControlName="complain_status"
+                    (onChange)="onStatusSelect($event)"
+                    >
+        </p-dropdown>
+        <small *ngIf="!complainForm.controls['complain_status'].valid && complainForm.controls['complain_status'].touched">
+          Please select complain status
+        </small>
+      </div>
+
+      <div class="ui-md-12 ui-g-12">
+        <label>Description</label>
+        <textarea [rows]="8" [cols]="30"
+                  pInputTextarea
+                  autoResize="autoResize"
+                  formControlName="description"
+        ></textarea>
+
+        <small *ngIf="!complainForm.controls['description'].valid && complainForm.controls['description'].touched">
+          Description is required
+        </small>
+      </div>
+
+      <!--<div style="width:800px; margin:0 auto;">-->
+
+      <div class="ui-md-12 ui-g-12">
+        <label >Customer</label>
+        <p-autoComplete
+          [suggestions]="customerData"
+          (completeMethod)="filterCustomer($event)"
+          (onSelect)="selectCustomer($event)"
+          formControlName="customer"
+          [size]="30"
+          placeholder="Select Customer"
+          [dropdown]="true"
+          field="name"
+          [forceSelection]="true"
+          [showTransitionOptions]="'0ms'"
+        ></p-autoComplete>
+        <small *ngIf="!complainForm.controls['customer'].valid && complainForm.controls['customer'].touched">
+          Please select customer
+        </small>
+      </div>
+
+      <button name="basic" pButton type="submit"  label="Submit"></button>
+      <button name="basic" class="ui-button-secondary" pButton type="button" label="Cancel" (click)="onCancel()"></button>
+
+    </div>
+      </p-card>
+  </form>
+

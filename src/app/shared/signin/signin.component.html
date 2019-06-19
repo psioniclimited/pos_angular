@@ -1,0 +1,35 @@
+<div class="login-body" id="login-body">
+  <form (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="login-panel ui-fluid">
+      <div class="ui-g">
+        <div class="ui-g-12 logo-container">
+          <img src="assets/img/landing_logo.jpg">
+        </div>
+        <div class="ui-g-12">
+          <input type="text" autocomplete="off" class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                 name="email" placeholder="Email" [(ngModel)]="form.email" required>
+        </div>
+        <div class="ui-g-12">
+          <input type="password" autocomplete="off" class="ui-inputtext ui-corner-all ui-state-default ui-widget"
+                 name="password" placeholder="Password" [(ngModel)]="form.password" required>
+        </div>
+        <div class="ui-g-12 button-container">
+          <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"
+                  [disabled]="!f.valid">
+            <span class="ui-button-icon-left ui-c"></span>
+            <span class="ui-button-text ui-c">Sign In</span>
+          </button>
+
+
+          <p style="color: currentColor;margin-bottom: 5px">New User? Sign Up here!</p>
+
+          <button type="button" [routerLink]="['/sign-up']"
+                  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left blue-btn">
+            <span class="ui-button-icon-left ui-c"></span>
+            <span class="ui-button-text ui-c">Sign Up</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

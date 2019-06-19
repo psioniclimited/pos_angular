@@ -1,0 +1,7 @@
+<div class="loader-wrapper" [class.hidden]="!show">
+  <!--<div class="loader-overlay">-->
+    <!--<div *ngIf="show" class="loader"></div>-->
+  <!--</div>-->
+    <p-progressBar mode="indeterminate" [style]="{'height': '4px', 'z-index': '2000'}" *ngIf="show"></p-progressBar>
+
+</div>

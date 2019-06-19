@@ -1,0 +1,129 @@
+<div class="ui-g">
+  <p-card class="ui-g-12">
+    <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12">
+        <h4>Journal List</h4>
+        <hr>
+      </div>
+
+      <div class="ui-md-3 ui-g-12">
+        <label>Date Filter</label>
+        <div class="ui-inputgroup">
+          <p-calendar
+            dateFormat="dd/mm/yy"
+            placeholder="Date Filter"
+            [(ngModel)]="rangeDates"
+            selectionMode="range"
+            [readonlyInput]="true"
+            #dateFilter
+            (onSelect)="$event.value ? dt.filter($event.value.name, 'created_at', 'equals') : dt.filter('', 'created_at', 'equals'); filterDateRange($event);"></p-calendar>
+          <p-splitButton styleClass="selected" label="Save" icon="pi pi-check" [model]="dateFilters"></p-splitButton>
+        </div>
+      </div>
+
+      <div class="ui-md-3 ui-g-12">
+        <button pButton id="clearFilter" type="submit" label="Clear Filters"
+                (click)="dt.reset(); clearFilters()"></button>
+      </div>
+
+    </div>
+
+    <p-table
+      #dt
+      [columns]="cols"
+      [value]="journals"
+      [lazy]="true"
+      (onLazyLoad)="loadJournalsLazy($event)"
+      [paginator]="true"
+      [rows]="50"
+      [rowsPerPageOptions]="[50,70,100]"
+      [totalRecords]="totalRecords"
+      [loading]="loading"
+      [scrollable]="scrollable">
+
+      <ng-template pTemplate="caption">
+        <div style="text-align: right">
+          <button id="export" pButton type="submit" icon="pi pi-file" label="Export CSV"
+                  (click)="this.generateReport(this.reportTypes.csv)"></button>
+
+          <i id="searchIcon" class="pi pi-search"></i>
+          <input id="globalFilter" type="text" pInputText size="25" placeholder="Global Filter"
+                 (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup *ngIf="scrollable">
+          <col *ngFor="let col of columns" style="width:150px">
+        </colgroup>
+      </ng-template>
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <!--        <th *ngFor="let col of columns" [pSortableColumn]="col.field">-->
+          <!--          {{col.header}}-->
+          <!--          <p-sortIcon [field]="col.field"></p-sortIcon>-->
+          <!--        </th>-->
+          <th>
+            Date
+          </th>
+          <th>
+            Account
+          </th>
+          <th>
+            Note
+          </th>
+          <th>
+            Debit
+          </th>
+          <th>
+            Credit
+          </th>
+
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <!--        <td *ngFor="let col of columns" >-->
+          <!--          <span class="ui-column-title">{{col.header}}</span>-->
+          <!--          {{rowData[col.field]}}-->
+          <!--        </td>-->
+          <td>
+            {{rowData['transaction_date']}}
+          </td>
+          <td>
+            <span>{{rowData['posting'][0]['chart_of_account']['description']}}</span>
+          </td>
+          <td>
+            {{rowData['note']}}
+          </td>
+          <td>
+            <span>{{rowData['posting'][0]['debit']}}</span>
+          </td>
+          <td>
+          </td>
+
+        </tr>
+
+        <tr style="background-color: white; border-bottom: 1px solid #c8c8c8">
+          <td>
+          </td>
+          <td>
+            <span style="padding-left: 45%">{{rowData['posting'][1]['chart_of_account']['description']}}</span>
+          </td>
+          <td>
+          </td>
+          <td>
+          </td>
+          <td>
+            <span>{{rowData['posting'][1]['credit']}}</span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <p style="font-weight: normal; float: left">Showing {{from}} - {{to}} of {{totalRecords}} records</p>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

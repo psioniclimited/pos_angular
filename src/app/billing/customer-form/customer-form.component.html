@@ -1,0 +1,386 @@
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="ui-g">
+  <p-card class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+
+    <div class="ui-g">
+      <div class="ui-g-12">
+        <h4>Customer Information</h4>
+        <hr>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="name">Name</label>
+        <input
+          [readOnly]="disableForm"
+          type="text"
+          id="name"
+          class="form-control"
+          pInputText
+          placeholder="Enter name"
+          name="name"
+          formControlName="name">
+        <small
+          *ngIf="customerForm.controls['name'].errors && customerForm.controls['name'].errors.required && customerForm.controls['name'].touched">
+          Name is required
+        </small>
+        <!--          <small *ngIf="customerForm.controls['name'].errors && customerForm.controls['name'].errors.maxlength && customerForm.controls['name'].touched && customerForm.controls['name'].errors">-->
+        <!--            Length is required-->
+        <!--          </small>-->
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="code">Code</label>
+        <input
+          [readOnly]="disableForm"
+          type="number"
+          id="code"
+          class="form-control"
+          pInputText
+          placeholder="Enter code"
+          name="code"
+          formControlName="code">
+        <small *ngIf="!customerForm.controls['code'].valid && customerForm.controls['code'].touched">
+          Code is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="email">Email</label>
+        <input
+          [readOnly]="disableForm"
+          type="email"
+          id="email"
+          class="form-control"
+          pInputText
+          placeholder="Enter email"
+          name="email"
+          formControlName="email">
+        <small *ngIf="!customerForm.controls['email'].valid && customerForm.controls['email'].touched">
+          Email is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="phone">Phone Number</label>
+        <input
+          [readOnly]="disableForm"
+          type="text"
+          id="phone"
+          class="form-control"
+          pInputText
+          placeholder="Enter phone number"
+          name="phone"
+          formControlName="phone">
+        <small *ngIf="!customerForm.controls['phone'].valid && customerForm.controls['phone'].touched">
+          Phone is required
+        </small>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="nid">NID Number</label>
+        <input
+          [readOnly]="disableForm"
+          type="text"
+          id="nid"
+          class="form-control"
+          pInputText
+          placeholder="Enter NID number"
+          name="nid"
+          formControlName="nid">
+        <small *ngIf="!customerForm.controls['nid'].valid && customerForm.controls['nid'].touched">
+          NID is required
+        </small>
+      </div>
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="address">Address</label>
+        <br>
+        <input
+          [readOnly]="disableForm"
+          pInputText
+          placeholder="Enter Address"
+          id="address"
+          name="address"
+          formControlName="address"
+          class="form-control"
+        >
+        <small *ngIf="!customerForm.controls['address'].valid && customerForm.controls['address'].touched">
+          Address is required
+        </small>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12">
+        <h4>Connection Information</h4>
+        <hr>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="monthly_charge">Monthly Charge</label>
+        <input
+          [readOnly]="disableForm"
+          type="number"
+          min="0"
+          id="monthly_charge"
+          class="form-control"
+          pInputText
+          placeholder="Enter monthly charge"
+          name="monthly_charge"
+          formControlName="monthly_charge"
+          pKeyFilter="pint" >
+        <small
+          *ngIf="!customerForm.controls['monthly_charge'].valid && customerForm.controls['monthly_charge'].touched">
+          Monthly charge is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label>Due On</label>
+        <br>
+        <p-calendar
+          [disabled]="disableForm"
+          [showIcon]="true"
+          view="month"
+          formControlName="due_on"
+          placeholder="Due date"
+          dateFormat="mm/yy"
+          [yearNavigator]="true"
+          yearRange="2000:2030"></p-calendar>
+        <small *ngIf="!customerForm.controls['due_on'].valid && customerForm.controls['due_on'].touched">
+          Due on is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label>Connection Date</label>
+        <br>
+        <p-calendar
+          [disabled]="disableForm"
+          [showIcon]="true"
+          formControlName="connection_date"
+          placeholder="Connection Date"
+          dateFormat="dd/mm/yy"
+          [yearNavigator]="true"
+          yearRange="2000:2030"></p-calendar>
+        <small *ngIf="!customerForm.controls['connection_date'].valid && customerForm.controls['connection_date'].touched">
+          Connection Start Date is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="status">Status</label>
+        <br>
+        <p-dropdown
+          [style]="{'width':'100% !important'}"
+          [options]="statuses"
+          placeholder="Select Status"
+          optionLabel="name"
+          [showClear]="true"
+          id="status"
+          name="status"
+          formControlName="status"
+          (onChange)="disableFormValue($event)"
+        ></p-dropdown>
+        <small *ngIf="!customerForm.controls['status'].valid && customerForm.controls['status'].touched">
+          Status is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="disableForm == true">
+        <label>Disconnection Date</label>
+        <br>
+        <p-calendar
+          [showIcon]="true"
+          formControlName="disconnection_date"
+          placeholder="Disconnection Date"
+          dateFormat="dd/mm/yy"
+          [yearNavigator]="true"
+          yearRange="2000:2030"></p-calendar>
+        <small *ngIf="!customerForm.controls['disconnection_date'].valid && customerForm.controls['disconnection_date'].touched">
+          Disconnection Date is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="subscription_type">Subscription Type</label>
+        <br>
+        <p-dropdown
+          [disabled]="disableForm"
+          [style]="{'width':'100% !important'}"
+          [options]="subscription_types"
+          placeholder="Select Subscription Type"
+          optionLabel="name"
+          [showClear]="true"
+          id="subscription_type"
+          name="subscription_type"
+          formControlName="subscription_type"
+          (onChange)="changeSelectedSubscriptionType($event)"></p-dropdown>
+        <small
+          *ngIf="!customerForm.controls['subscription_type'].valid && customerForm.controls['subscription_type'].touched">
+          Subscription Type is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4" *ngIf="selectedSubscriptionType.id == 2">
+        <label for="card">Card Number</label>
+        <input
+          [readOnly]="disableForm"
+          type="text"
+          id="card"
+          class="form-control"
+          pInputText
+          placeholder="Enter card number"
+          name="card"
+          formControlName="card_number">
+        <small *ngIf="!customerForm.controls['card_number'].valid && customerForm.controls['card_number'].touched">
+          Card Number is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="bill_collector">Bill Collector</label>
+        <br>
+        <p-autoComplete
+          [disabled]="disableForm"
+          placeholder="Select Bill Collector"
+          id="bill_collector"
+          [suggestions]="users"
+          (completeMethod)="filterUser($event)"
+          [forceSelection]="true"
+          [size]="30"
+          [dropdown]="true"
+          [multiple]="true"
+          [showTransitionOptions]="'0ms'"
+          field="name"
+          formControlName="users"></p-autoComplete>
+        <small *ngIf="!customerForm.controls['users'].valid && customerForm.controls['users'].touched">
+          Bill collector is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="area">Area</label>
+        <br>
+        <div class="ui-inputgroup">
+          <p-autoComplete
+            [disabled]="disableForm"
+            placeholder="Select Area"
+            id="area"
+            [size]="30"
+            [dropdown]="true"
+            [suggestions]="areas"
+            (completeMethod)="filterArea($event)"
+            [forceSelection]="true"
+            [showTransitionOptions]="'0ms'"
+            field="name"
+            formControlName="area"
+          ></p-autoComplete>
+          <button class="area-button" style="border-radius: 3px" type="button" (click)="showDialog()" pButton
+                  icon="pi pi-ellipsis-h"></button>
+        </div>
+        <small *ngIf="!customerForm.controls['area'].valid && customerForm.controls['area'].touched">
+          Area is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="connections">Connections</label>
+        <br>
+        <input
+          [readOnly]="disableForm"
+          type="number"
+          min="0"
+          id="connections"
+          pInputText
+          placeholder="Enter number of connections"
+          name="connections"
+          class="form-control"
+          formControlName="connections"
+          pKeyFilter="pint"
+        >
+        <small *ngIf="!customerForm.controls['connections'].valid && customerForm.controls['connections'].touched">
+          Connections is required
+        </small>
+      </div>
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="reference">Reference</label>
+        <br>
+        <input
+          [readOnly]="disableForm"
+          type="text"
+          id="reference"
+          pInputText
+          placeholder="Enter reference"
+          name="reference"
+          class="form-control"
+          formControlName="reference"
+        >
+        <small *ngIf="!customerForm.controls['reference'].valid && customerForm.controls['reference'].touched">
+          Reference is required
+        </small>
+      </div>
+
+    </div>
+
+    <br *ngIf="!id">
+
+    <div class="ui-g ui-fluid" *ngIf="!id">
+      <div class="ui-g-12">
+        <h4>Connection Fee</h4>
+        <hr>
+      </div>
+
+      <!--        <div class="ui-g-12 ui-md-6 ui-lg-4">-->
+      <!--          <label for="fee_type">Fee Type</label>-->
+      <!--          <br>-->
+      <!--          <p-autoComplete-->
+      <!--            [disabled]="disableForm"-->
+      <!--            placeholder="Select Fee Type"-->
+      <!--            id="fee_type"-->
+      <!--            [suggestions]="feeTypes"-->
+      <!--            (completeMethod)="filterFeeType($event)"-->
+      <!--            [forceSelection]="true"-->
+      <!--            [size]="30"-->
+      <!--            [dropdown]="true"-->
+      <!--            [multiple]="true"-->
+      <!--            [showTransitionOptions]="'0ms'"-->
+      <!--            field="name"-->
+      <!--            formControlName="fee_type"-->
+      <!--            ></p-autoComplete>-->
+      <!--        </div>-->
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <label for="total_fee">Total</label>
+        <input
+          [readOnly]="disableForm"
+          type="number"
+          min="0"
+          id="total_fee"
+          pInputText
+          placeholder="Enter Total Fee"
+          name="total_fee"
+          class="form-control"
+          formControlName="connection_fee"
+          pKeyFilter="pint"
+        >
+        <small *ngIf="!customerForm.controls['connection_fee'].valid">
+          Connection Fee must be greater than 0
+        </small>
+      </div>
+
+    </div>
+
+
+    <div id="buttons">
+      <button class="" pButton type="submit" label="Submit"></button>
+      <button class="ui-button-secondary" pButton label="Cancel" (click)="onCancel()"></button>
+    </div>
+
+    <p-dialog id="areaDialog" header="Area Details" [(visible)]="displayDialog" [modal]="true" [responsive]="true"
+              [width]="1000" [minWidth]="300" [minY]="70"
+              [maximizable]="true" [baseZIndex]="10000">
+      <app-area (closeDisplayDialog)="displayDialog = false"></app-area>
+    </p-dialog>
+  </p-card>
+</form>

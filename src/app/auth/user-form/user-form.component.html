@@ -1,0 +1,87 @@
+<div class="ui-g">
+<p-card class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+  <form class="container ui-fluid" [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <h4 >User Form</h4>
+    <hr>
+    <div class="ui-g form-group ">
+      <div class="ui-md-6 ui-g-12 ">
+        <label >Name</label>
+        <input type="text" id="name" class="form-control"
+               pInputText placeholder="Enter name"
+               name="name" formControlName="name">
+        <small *ngIf="!userForm.controls['name'].valid && userForm.controls['name'].touched">
+          Name is required
+        </small>
+      </div>
+
+      <div class=" ui-md-6 ui-g-12">
+        <label >Email Address</label>
+        <input type="email" id="email"
+               class="form-control"
+               pInputText placeholder="Enter email"
+               name="email" formControlName="email">
+        <small *ngIf="!userForm.controls['email'].valid && userForm.controls['email'].touched">
+          Email is required
+        </small>
+      </div>
+
+      <div class="ui-md-6 ui-g-12">
+        <label>Password</label>
+        <input type="password"
+               class="form-control"
+               pInputText pPassword placeholder="Password"
+               name="password" formControlName="password">
+        <small *ngIf="!userForm.controls['password'].valid && userForm.controls['password'].touched">
+          Password is required
+        </small>
+      </div>
+
+      <!--<div style="width:800px; margin:0 auto;">-->
+
+      <div class="ui-md-6 ui-g-12">
+        <label>Confirm Password</label>
+        <input type="password"
+               pPassword
+               class="form-control"
+               pInputText
+               formControlName="password_confirmation"
+               placeholder="Confirm password"
+               >
+      </div>
+
+      <div class="ui-md-6 ui-g-12">
+        <label>Roles</label>
+        <span class="ui-fluid">
+          <p-autoComplete
+            [suggestions]="roles"
+            (completeMethod)="filterUserRoles($event)"
+            [minLength]="1"
+            placeholder="Roles"
+            formControlName="roles"
+            field="display_name"
+            [multiple]="true"
+            [dropdown]="true"
+            [forceSelection]="true"
+            [showTransitionOptions]="'0ms'"
+          >
+          </p-autoComplete>
+          <small *ngIf="!userForm.controls['roles'].valid && userForm.controls['roles'].touched">
+          Role is required
+        </small>
+        </span>
+      </div>
+
+      <div class="ui-md-6 ui-g-12">
+        <label>Active</label>
+        <br>
+        <p-inputSwitch
+          formControlName="active"
+          ></p-inputSwitch>
+      </div>
+      <button class="" name="basic" pButton type="submit"  label="Submit"></button>
+      <button class="ui-button-secondary" name="basic" pButton type="button" label="Cancel" (click)="onCancel()"></button>
+
+    </div>
+  </form>
+</p-card>
+</div>

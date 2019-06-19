@@ -1,0 +1,36 @@
+//.footer {
+//  position: absolute;
+//  bottom: 0;
+//  width: 100%;
+//  /* Set the fixed height of the footer here */
+//  padding-top: 20px;
+//  padding-bottom: 10px;
+//}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  line-height: 60px;
+}
+
+#psionic{
+  text-align: left;
+  text-decoration: none;
+  color: #1e469a;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+}
+
+#psionic:hover{
+  color: #0abb87;
+}
+
+#footer-icon{
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  border: 0 none;
+  margin-right: 6px;
+}

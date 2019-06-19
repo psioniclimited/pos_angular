@@ -1,0 +1,115 @@
+/*theme*/
+#login-body {
+  height: 100vh;
+}
+
+#login-body .ui-inputtext {
+  background: #ffffff;
+  padding: 0.35em;
+  border: 1px solid #a8acb1;
+  -moz-transition: border-color 0.3s;
+  -o-transition: border-color 0.3s;
+  -webkit-transition: border-color 0.3s;
+  transition: border-color 0.3s;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  font-size: 14px;
+  color: #5f666c;
+}
+
+#login-body .ui-corner-all {
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+#login-body .ui-widget, #login-body .ui-widget .ui-widget {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  text-decoration: none;
+}
+
+#login-body .ui-button {
+  color: #ffffff;
+  width: inherit;
+  background-color: #00acac;
+  border: 1px solid transparent;
+  font-size: 14px;
+  -moz-transition: background-color 0.3s;
+  -o-transition: background-color 0.3s;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+}
+
+#login-body .ui-button.blue-btn {
+  background-color: #2f8ee5;
+}
+
+#login-body .ui-widget, #login-body .ui-widget .ui-widget {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  text-decoration: none;
+}
+
+#login-body .ui-button.ui-button-text-icon-left .ui-button-text {
+  padding: .35em .7em .35em 1em;
+}
+
+/*layout*/
+#login-body {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  color: #5f666c;
+  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  margin: 0;
+  min-height: 100%;
+  background-color: #D9E0E7;
+}
+
+.login-body .login-panel {
+  height: 100%;
+  width: 350px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 100px 50px;
+  -webkit-box-shadow: 0 5px 7px 5px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 5px 7px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 7px 5px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  background-color: #ffffff;
+  overflow: auto;
+}
+
+.login-body .login-panel .ui-g-12 {
+  padding: 16px 0;
+  text-align: center;
+}
+
+.login-body .login-panel .ui-g-12.logo-container img {
+  width: inherit;
+  margin-bottom: 20px;
+}
+
+.login-body .login-panel .ui-g-12.button-container button {
+  margin-bottom: 20px;
+}
+
+@media (min-width: 641px){
+  .login-body {
+    //background-image: url('/assets/img/login_background.jpg');
+    background: url(/assets/img/login_background.jpg) no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+  }
+}
+
+@media (max-width: 640px){
+  .login-body {
+    background: none;
+  }
+
+  .login-body .login-panel {
+    width: 100%;
+  }
+}
+

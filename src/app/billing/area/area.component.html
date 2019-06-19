@@ -1,0 +1,13 @@
+<div class="ui-g">
+  <div class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+    <p-card>
+      <app-area-form [editAreaId]="editAreaId" (closeDisplayDialog)="displayDialogFalse()" (reloadAreaTable)="emitAreaReload()"></app-area-form>
+    </p-card>
+  </div>
+
+  <div class="ui-g-12">
+    <p-card>
+      <app-area-table (editAreaEvent)="editAreaEvent($event)" [reloadArea]="reloadArea"></app-area-table>
+    </p-card>
+  </div>
+</div>

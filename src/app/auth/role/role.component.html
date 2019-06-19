@@ -1,0 +1,51 @@
+<div class="ui-g">
+  <p-card class="ui-lg-6 ui-g-12">
+    <form class="container ui-fluid" [formGroup]="roleForm" (ngSubmit)="onSubmit()" >
+      <h4 *ngIf="RoleId;else create_role" for="name">Edit Role</h4>
+      <ng-template #create_role><h4>Create Role</h4></ng-template>
+      <hr>
+      <div class="ui-g form-group ">
+        <div class="ui-md-6 ui-g-12 ">
+          <label for="name">Name</label>
+          <input type="text" id="name" class="form-control"
+                 pInputText placeholder="Enter name"
+                 name="name" formControlName="name">
+          <small *ngIf="!roleForm.controls['name'].valid && roleForm.controls['name'].touched">
+            Name is required
+          </small>
+        </div>
+
+        <div class=" ui-md-6 ui-g-12">
+          <label for="display_name">Display Name</label>
+          <input type="text" id="display_name"
+                 class="form-control"
+                 pInputText placeholder="Enter Display Name"
+                 name="display_name" formControlName="display_name">
+          <small *ngIf="!roleForm.controls['display_name'].valid && roleForm.controls['display_name'].touched">
+            Display Name is required
+          </small>
+        </div>
+
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+          <label for="description">Description</label>
+          <textarea
+            [rows]="5"
+            [cols]="30"
+            pInputTextarea
+            autoResize="autoResize"
+            id="description"
+            placeholder="Enter Description"
+            formControlName="description"></textarea>
+          <small *ngIf="!roleForm.controls['description'].valid && roleForm.controls['description'].touched">
+            Description is required
+          </small>
+        </div>
+        <button class="submit-color" pButton type="submit" label="Submit"></button>
+        <button class="ui-button-secondary" pButton type="button" label="Cancel" (click)="onCancel()"></button>
+      </div>
+    </form>
+  </p-card>
+
+  <app-role-table class="ui-lg-6 ui-g-12"></app-role-table>
+  <app-role-checkbox *ngIf="RoleId" class="ui-g-12"></app-role-checkbox>
+</div>

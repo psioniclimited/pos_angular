@@ -1,0 +1,30 @@
+h3, h6, span{
+  font-family: 'Montserrat', sans-serif;
+}
+
+span{
+  font-size: 1rem;
+}
+
+.alignMe {
+  list-style-type: none;
+}
+
+.alignMe span {
+  display: inline-block;
+  width: 23%;
+  position: relative;
+  padding-right: 10px; /* Ensures colon does not overlay the text */
+}
+
+.alignMe span:first-child::after {
+  content: ":";
+  position: absolute;
+  right: 10px;
+}
+
+.status_span{
+  content: ":";
+  position: absolute;
+  right: 10px;
+}

@@ -1,0 +1,84 @@
+<div class="ui-g" [formGroup]="feeCollectionForm">
+  <p-card class="ui-g-12 ui-fluid">
+    <h4>Collect Fee</h4>
+    <hr>
+    <div formArrayName="feeCollectionFormArray">
+      <div class="ui-g"  *ngFor="let feeCollection of feeCollections; let i = index;" [formGroupName]="i">
+
+        <div class="ui-md-3 ui-g-12">
+          <label >Customer Code</label>
+          <p-autoComplete
+            [suggestions]="customerData"
+            (completeMethod)="filterCustomer($event)"
+            (onSelect)="selectCustomer($event, i)"
+            [size]="30"
+            placeholder="Enter Customer Code"
+            [dropdown]="true"
+            field="name"
+            formControlName="code"
+            [forceSelection]="true"
+            [showTransitionOptions]="'0ms'"
+          ></p-autoComplete>
+          <small *ngIf="!feeCollectionForm.controls['feeCollectionFormArray'].controls[i]['controls']['code'].valid && feeCollectionForm.controls['feeCollectionFormArray'].controls[i]['controls']['code'].touched">
+           Code is required
+          </small>
+        </div>
+
+        <div class="ui-md-3 ui-g-12 ">
+          <label>Address</label>
+          <input
+            type="text"
+            pInputText
+            formControlName="address"
+            readonly>
+        </div>
+
+        <div class="ui-md-3 ui-g-12">
+          <label >Fee Type</label>
+          <p-autoComplete
+            [suggestions]="feeTypes"
+            (completeMethod)="filterFeeType($event)"
+            (onSelect)="selectFeeType($event, i)"
+            [size]="30"
+            placeholder="Enter Fee Type"
+            [dropdown]="true"
+            field="name"
+            formControlName="fee_type"
+            [forceSelection]="true"
+            [showTransitionOptions]="'0ms'"
+          ></p-autoComplete>
+          <small *ngIf="!feeCollectionForm.controls['feeCollectionFormArray'].controls[i]['controls']['fee_type'].valid && feeCollectionForm.controls['feeCollectionFormArray'].controls[i]['controls']['fee_type'].touched">
+            Fee Type is required
+          </small>
+        </div>
+
+        <div class="ui-md-3 ui-g-12 ">
+          <label>Total</label>
+          <div class="ui-inputgroup">
+            <input
+              type="number"
+              min="0"
+              pInputText
+              formControlName="total"
+              (input)="editTotal($event.target.value, i)"
+              pKeyFilter="pint">
+            <button class="area-button"
+                    style="border-radius: 3px"
+                    type="button"
+                    (click)="deleteBill(i)"
+                    pButton icon="pi pi-trash"
+                    [disabled]="feeCollections.length === 1">
+
+            </button>
+          </div>
+          <small *ngIf="!feeCollectionForm.controls['feeCollectionFormArray'].controls[i]['controls']['total'].valid && feeCollectionForm.controls['feeCollectionFormArray'].controls[i]['controls']['total'].touched">
+            Total is required
+          </small>
+        </div>
+        <hr style="width: 100%">
+      </div>
+    </div>
+    <button type="button" pButton icon="pi pi-plus" label="Add Bill" (click)="addNewBill()"></button>
+    <button class="submit-color" name="basic" pButton type="submit" label="Submit" (click)="onSubmit()"></button>
+  </p-card>
+</div>

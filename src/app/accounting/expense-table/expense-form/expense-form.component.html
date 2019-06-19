@@ -1,0 +1,153 @@
+<form class="ui-g ui-fluid" [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+
+  <p-dialog header="Account Details"
+            [(visible)]="displayDialog"
+            [modal]="true"
+            [responsive]="true"
+            showEffect="fade"
+            [width]="800"
+            [minWidth]="200"
+            [minY]="70"
+            [maximizable]="true"
+            [baseZIndex]="10000"
+            [closable]="false">
+    <div class="ui-md-12 ui-g-12">
+      <label class="sub-header-font" for="date">Date</label>
+      <p-calendar
+        id="date"
+        type="text"
+        placeholder="Enter date"
+        formControlName="date"
+
+        [showIcon]="true"></p-calendar>
+      <small *ngIf="!expenseForm.controls['date'].valid && expenseForm.controls['date'].touched">
+        Date is required
+      </small>
+    </div>
+    <div class="ui-md-12 ui-g-12">
+      <label class="sub-header-font" for="label_desc">Label Description</label>
+      <input type="text"
+             id="label_desc"
+             class="form-control"
+             formControlName="description"
+             pInputText
+             placeholder="Enter label description"
+             >
+      <small *ngIf="!expenseForm.controls['description'].valid && expenseForm.controls['description'].touched">
+        Description is required
+      </small>
+    </div>
+    <div class="ui-md-8 ui-g-8">
+      <label class="sub-header-font">Paid with</label>
+      <p-dropdown [options]="paidWithAccounts"
+                  placeholder="Select paid with category"
+                  optionLabel="name"
+                  [showClear]="true"
+                  [style]="{'width':'100%'}"
+                  filter="true"
+                  formControlName="paid_with_id"
+                  (onChange)="onPaidWithSelect($event)"
+                  >
+      </p-dropdown>
+      <!--<input type="text"-->
+      <!--id="paid"-->
+      <!--class="form-control"-->
+      <!--pInputText-->
+      <!--placeholder="Enter starting balance"-->
+      <!--formControlName="paid_with"-->
+      <!--[(ngModel)]="newExpense.paid_with">-->
+      <small *ngIf="!expenseForm.controls['paid_with_id'].valid && expenseForm.controls['paid_with_id'].touched">
+        Paid with category is required
+      </small>
+    </div>
+    <div class="ui-md-4 ui-g-4">
+      <label class="sub-header-font" for="amount">Amount</label>
+      <input type="number"
+             min="0"
+             id="amount"
+             class="form-control"
+             pInputText
+             placeholder="Enter amount"
+             formControlName="amount"
+             pKeyFilter="pint">
+      <small *ngIf="!expenseForm.controls['amount'].valid && expenseForm.controls['amount'].touched ">
+        Amount is required
+      </small>
+    </div>
+    <hr class="ui-g-12">
+    <!--<div class="ui-md-12 ui-g-12" *ngIf="!isSplitExpense">-->
+    <!--<label class="sub-header-font">Expense Category</label>-->
+    <!--<p-dropdown [options]="expenseAccounts"-->
+    <!--placeholder="Select expense category"-->
+    <!--optionLabel="name"-->
+    <!--(onChange)="onExpenseSelect($event, i)"-->
+    <!--[showClear]="true"-->
+    <!--[style]="{'width':'100%'}"-->
+    <!--filter="true"-->
+    <!--[(ngModel)]="newExpense.expenseDetail">-->
+    <!--</p-dropdown>-->
+    <!--<small *ngIf="!expenseForm.controls['paid_with'].valid && expenseForm.controls['paid_with'].touched">-->
+    <!--Expense category is required-->
+    <!--</small>-->
+    <!--</div>-->
+    <div formArrayName="expenseDetail">
+      <div class="" *ngFor="let expenseDetail of selectedExpenseAccounts; let i = index" [formGroupName]="i">
+
+        <div class="ui-md-8 ui-g-8" [ngClass]="{'ui-md-12 ui-g-12': !isSplitExpense}">
+          <label class="sub-header-font">Expense Category</label>
+          <p-dropdown [options]="expenseAccounts"
+                      placeholder="Select expense category"
+                      optionLabel="name"
+                      (onChange)="onExpenseSelect($event, i)"
+                      [showClear]="true"
+                      [style]="{'width':'100%'}"
+                      filter="true"
+                      formControlName="expenseCategory"
+                      >
+          </p-dropdown>
+          <small *ngIf="!expenseForm.controls['expenseDetail'].valid && expenseForm.controls['expenseDetail'].touched">
+            Expense Category is required
+          </small>
+          <!--{{selectedExpenseAccounts[i].chart_of_account.name}}-->
+          <!--{{expenseDetail.chart_of_account}}-->
+          <!--<small *ngIf="!expenseForm.controls.expenseDetail.controls[i].controls.expenseCategory.valid-->
+           <!--&& expenseForm.controls['expenseDetail'].touched">-->
+            <!--Expense category is required-->
+          <!--</small>-->
+        </div>
+        <div [ngClass]="{'hide-split': !isSplitExpense}">
+          <div class="ui-md-3 ui-g-3 ">
+            <label class="sub-header-font" for="split_amount">Split Amount</label>
+            <input type="text"
+                   id="split_amount"
+                   class="form-control"
+                   pInputText
+                   placeholder="Enter split amount"
+                   formControlName="splitAmount"
+
+                   (ngModelChange)="checkAmount()">
+            <!--<small *ngIf="!expenseForm.controls['splitAmount'].valid && expenseForm.controls['splitAmount'].touched">-->
+              <!--Split Amount is required-->
+            <!--</small>-->
+          </div>
+
+          <br>
+          <i class="ui-md-1 ui-g-1 pi pi-trash" (click)="deleteExpense()"
+             style="margin-top: 8px; font-size: 1.8rem"></i>
+        </div>
+        <!--<button class="ui-md-1 ui-g-1" type="button" pButton icon="pi pi-trash" (click)="deleteExpense()"></button>-->
+        <br><br><br><br>
+      </div>
+      <small *ngIf="matchingAmount == false" [ngClass]="{'hide-split': !isSplitExpense}">
+        The sum of the above lines should not exceed the total withdrawal amount of {{rowExpenseData.amount}}.
+      </small>
+    </div>
+    <!--<button type="button" pButton icon="pi pi-check" label="Split this withdrawal" (click)="splitExpense()"></button>-->
+
+    <p-footer>
+      <button type="submit" pButton icon="pi pi-check" label="Submit"></button>
+      <button type="button" pButton icon="pi pi-times" (click)="displayDialogFalse()" label="Cancel" class="ui-button-secondary"></button>
+    </p-footer>
+
+  </p-dialog>
+</form>

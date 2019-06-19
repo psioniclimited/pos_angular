@@ -1,0 +1,106 @@
+<div class="ui-g">
+
+  <p-card class="ui-g-12">
+
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <h4>Product Sales Report</h4>
+      <hr>
+    </div>
+
+    <div class="ui-g-0 ui-lg-12">
+      <p-card class="ui-g-12 ui-lg-3" id="dash_expense">
+        <h5 class="">Total Bill</h5>
+        <hr>
+        <h6>BDT {{total?.toLocaleString('en-IN') | number:'1.2'}}</h6>
+      </p-card>
+
+      <p-card class="ui-g-12 ui-lg-3" id="dash_due">
+        <h5 class="">Total Discount</h5>
+        <hr>
+        <h6>BDT {{totalDiscount?.toLocaleString('en-IN') | number:'1.2'}}</h6>
+      </p-card>
+
+      <p-card class="ui-g-12 ui-lg-3" id="dash_collection">
+        <h5 class="">Grand Total</h5>
+        <hr>
+        <h6>BDT {{totalPaid?.toLocaleString('en-IN') | number:'1.2'}}</h6>
+      </p-card>
+    </div>
+
+    <div class="ui-md-3 ui-g-12">
+      <label>Date Filter</label>
+      <div class="ui-inputgroup">
+        <p-calendar
+          dateFormat="dd/mm/yy"
+          placeholder="Date Filter"
+          [(ngModel)]="rangeDates"
+          selectionMode="range"
+          [readonlyInput]="true"
+          #dateFilter
+          (onSelect)="$event.value ? dt.filter($event.value.name, 'created_at', 'equals') : dt.filter('', 'created_at', 'equals'); filterDateRange($event);"></p-calendar>
+        <p-splitButton styleClass="selected" label="Save" icon="pi pi-check" [model]="dateFilters"></p-splitButton>
+      </div>
+    </div>
+
+    <div class="ui-md-3 ui-g-12">
+      <button pButton id="clearFilter" type="submit" label="Clear Filters"
+              (click)="dt.reset(); clearFilters()"></button>
+    </div>
+
+  </div>
+  <p-table
+      #dt
+      [columns]="cols"
+      [value]="sales"
+      [lazy]="true"
+      (onLazyLoad)="loadSalesLazy($event)"
+      [totalRecords]="totalRecords"
+      [loading]="loading"
+      [responsive]="true">
+
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <button id="export" pButton type="submit" icon="pi pi-file" label="Export CSV" (click)="this.generateReport(this.reportTypes.csv)"></button>
+
+        <i id="searchIcon" class="pi pi-search"></i>
+        <input type="text" pInputText size="25" placeholder="Global Filter"
+               [(ngModel)]="globalFilter"
+               (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+    </ng-template>
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td>
+            <span class="ui-column-title">Product</span>
+            {{rowData['name']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Option Type</span>
+            {{rowData['type']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Quantity</span>
+            {{rowData['quantity']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Unit price</span>
+            {{rowData['sale_price']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Total</span>
+            {{rowData['total'].toLocaleString('en-IN') | number:'1.2'}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

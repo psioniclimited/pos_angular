@@ -1,0 +1,49 @@
+<p-card>
+  <p-table
+  #dt
+  [columns]="cols"
+  [value]="permissions"
+  [lazy]="true"
+  (onLazyLoad)="loadPermissionsLazy($event)"
+  [paginator]="true"
+  [rows]="10"
+  [rowsPerPageOptions]="[10,20,30]"
+  [totalRecords]="totalRecords"
+  [loading]="loading"
+  [responsive]="true">
+
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">
+      <i id="searchIcon" class="pi pi-search"></i>
+      <input type="text" pInputText size="30" placeholder="Global Filter"
+             (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+        {{col.header}}
+        <p-sortIcon [field]="col.field"></p-sortIcon>
+      </th>
+      <th>Action</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns">
+    <tr>
+      <td *ngFor="let col of columns" >
+        <span class="ui-column-title">{{col.header}}</span>
+        {{rowData[col.field]}}
+      </td>
+      <td>
+        <span class="ui-column-title">Action</span>
+        <button class="ui-button-secondary" label="Edit" name="basic" pButton type="button" icon="pi pi-pencil" (click)="editPermission(rowData.id)" ></button>
+        <button id="table-delete" class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-trash" (ngOnDestroy)="ngOnDestroy(rowData.id)" ></button>
+      </td>
+    </tr>
+  </ng-template>
+    <ng-template pTemplate="summary">
+        <p style="font-weight: normal; float: left">Showing {{from}} - {{to}} of {{totalRecords}} records</p>
+    </ng-template>
+  </p-table>
+</p-card>

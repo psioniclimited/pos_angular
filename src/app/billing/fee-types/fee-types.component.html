@@ -1,0 +1,58 @@
+<div class="ui-g">
+  <p-card class="ui-lg-6 ui-g-12">
+    <form class="container ui-fluid" [formGroup]="feeForm" (ngSubmit)="onSubmit()" >
+      <h4 *ngIf="feeId;else create_fee">Edit Fee Type</h4>
+      <ng-template #create_fee><h4>Create Fee Type</h4></ng-template>
+      <hr>
+      <div class="ui-g form-group ">
+        <div class="ui-md-6 ui-g-12 ">
+          <label for="name">Name</label>
+          <input
+            [readOnly]="editFee.immutable == 1"
+            type="text"
+            id="name"
+            class="form-control"
+            pInputText
+            placeholder="Enter name"
+            name="name"
+            formControlName="name">
+          <small *ngIf="!feeForm.controls['name'].valid && feeForm.controls['name'].touched">
+            Name is required
+          </small>
+        </div>
+
+        <div class=" ui-md-6 ui-g-12">
+          <label for="display_name">Amount</label>
+          <input type="number" id="display_name"
+                 class="form-control"
+                 pInputText placeholder="Enter Amount"
+                 name="price" formControlName="amount">
+          <small *ngIf="!feeForm.controls['amount'].valid && feeForm.controls['amount'].touched">
+            Price is required
+          </small>
+        </div>
+
+        <div class="ui-g-12 ui-md-12 ui-lg-12">
+          <label for="description">Description</label>
+          <textarea
+            [readOnly]="editFee.immutable == 1"
+            [rows]="5"
+            [cols]="30"
+            pInputTextarea
+            autoResize="autoResize"
+            id="description"
+            placeholder="Enter Description"
+            formControlName="description"></textarea>
+          <small *ngIf="!feeForm.controls['description'].valid && feeForm.controls['description'].touched">
+            Description is required
+          </small>
+        </div>
+        <button class="submit-color" pButton type="submit" label="Submit"></button>
+        <button class="ui-button-secondary" pButton type="button" label="Cancel" (click)="onCancel()"></button>
+      </div>
+    </form>
+  </p-card>
+
+  <app-fee-types-table class="ui-lg-6 ui-g-12"></app-fee-types-table>
+
+</div>

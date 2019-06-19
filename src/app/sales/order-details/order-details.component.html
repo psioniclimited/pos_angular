@@ -1,0 +1,84 @@
+<div class="ui-g">
+  <div class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+    <p-card>
+      <div class="container" *ngIf="showClient">
+        <h3 style="text-align: center">Order Details</h3>
+
+        <hr>
+
+        <ul class="alignMe">
+          <li><span>Client Name </span><span>{{showClient.name}}</span></li>
+          <li><span>Client Age </span><span>{{showClient.age}}</span></li>
+          <li><span>Client Email </span><span>{{showClient.email}}</span></li>
+          <li><span>Client Phone </span> <span >{{showClient.phone}}</span></li>
+          <li><span>Client Address </span> <span >{{showClient.address}}</span></li>
+          <li><span>Client Discount </span> <span >{{showClient.discount}}%</span></li>
+        </ul>
+
+      </div>
+    </p-card>
+  </div>
+
+  <div class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+    <p-card>
+      <p-table
+        #dt
+        [columns]="cols"
+        [value]="orderDetails"
+        [lazy]="true"
+        (onLazyLoad)="loadOrderDetailsLazy($event)"
+        [loading]="loading"
+        class="container"
+        [responsive]="true">
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns" [ngClass]="!col.subfield ? 'align_right' : null">
+              <div *ngIf="col.subfield; then nested_object_content else normal_content"></div>
+              <ng-template #nested_object_content>
+                <span class="ui-column-title">{{col.header}}</span>
+                  <span *ngIf="rowData[col.field]">{{rowData[col.field][col.subfield]}}</span>
+<!--                <span *ngIf="col.field">field {{rowData[col.field]}}</span>-->
+<!--                <span *ngIf="rowData[col.field] == null">null field</span>-->
+<!--                <span *ngIf="col.subfield">subfield</span>-->
+<!--                <span *ngIf="col.field">{{rowData[col.field][col.subfield]}}</span>-->
+              </ng-template>
+              <ng-template #normal_content>
+                <span class="ui-column-title">{{col.header}}</span>
+                {{rowData[col.field]}}
+              </ng-template>
+
+
+<!--              <span class="ui-column-title">{{col.header}}</span>-->
+<!--              <span>{{rowData[col.field]}}</span>-->
+<!--              <span *ngIf="rowData[col.field][col.subfield]">{{rowData[col.field][col.subfield]}}</span>-->
+            </td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+<!--          <p style="font-weight: normal; float: right">Sub Total: {{subTotal}}</p>-->
+<!--          <br>-->
+<!--          <p style="font-weight: normal; float: right">Discount: {{showClient.discount}}%</p>-->
+<!--          <br>-->
+<!--          <p style="font-weight: normal; float: right">Total: {{calculatedTotal}}</p>-->
+          <ul class="smallAlignMe" style="text-align: right">
+            <li><span>Sub Total </span><span>{{subTotal}}</span></li>
+            <li><span>Discount </span><span>{{discount}}%</span></li>
+            <li><span>Total </span><span>{{calculatedTotal}}</span></li>
+          </ul>
+        </ng-template>
+
+
+      </p-table>
+
+    </p-card>
+  </div>
+</div>

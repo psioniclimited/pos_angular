@@ -1,0 +1,99 @@
+<div class="ui-g">
+<p-card class="ui-g-12">
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12">
+      <h4>Complain List</h4>
+      <hr>
+    </div>
+    <div class="ui-md-4 ui-g-12">
+      <label>Complain Status Filter</label>
+      <p-dropdown
+        [(ngModel)]="statusFilter"
+        [filter]="true"
+        [showClear]="true"
+        [options]="complainStatuses"
+        optionLabel="label"
+        placeholder="Complain Status Filter"
+        [style]="{'width':'100%'}"
+        #statusDropdown
+        (onChange)="$event.value ? dt.filter($event.value.value, 'status', 'equals') : dt.filter('', 'status', 'equals')">
+      </p-dropdown>
+    </div>
+    <div class="ui-md-3 ui-g-12">
+      <button id="clearFilter" pButton type="submit" label="Clear Filters" (click)="dt.reset(); clearFilters()"></button>
+    </div>
+  </div>
+    <p-table
+    #dt
+    [columns]="cols"
+    [value]="complains"
+    [lazy]="true"
+    (onLazyLoad)="loadComplainsLazy($event)"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[10,20,30]"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [responsive]="true">
+
+    <ng-template pTemplate="caption">
+      <div style="text-align: right">
+        <button id="export" pButton type="submit" icon="pi pi-file" label="Export CSV" (click)="this.generateReport(this.reportTypes.csv)"></button>
+        <!--<p-splitButton id="export" label="Save" icon="pi pi-file" (onClick)="save('info')" [model]="items" ></p-splitButton>-->
+
+        <i id="searchIcon" class="pi pi-search"></i>
+        <input type="text" pInputText size="30" placeholder="Global Filter" [(ngModel)]="globalFilter"
+               (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{col.header}}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th>Action</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns">
+      <tr>
+        <td *ngFor="let col of columns" >
+          <span class="ui-column-title">{{col.header}}</span>
+          <span *ngIf="rowData[col.field] != 'Open' && rowData[col.field] != 'Closed'">{{rowData[col.field]}}</span>
+          <span class="table-label table-label-ok" *ngIf="rowData[col.field] == 'Open'">{{rowData[col.field]}}</span>
+          <span class="table-label table-label-danger" *ngIf="rowData[col.field] == 'Closed'">{{rowData[col.field]}}</span>
+        </td>
+        <td>
+          <span class="ui-column-title">Action</span>
+          <a [routerLink]="['/complain/' + rowData.id + '/edit']">
+            <button class="ui-button-secondary" label="Edit" name="basic" pButton type="button" icon="pi pi-pencil" (click)="editComplain(rowData.id)" ></button>
+          </a>
+          <button id="table-delete" class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-trash" (click)="showDeleteDialog(rowData.id)" ></button>
+          <button class="ui-button-secondary" name="basic" pButton type="button" label="Close" (click)="closeStatus(rowData.id)"></button>
+        </td>
+      </tr>
+    </ng-template>
+      <ng-template pTemplate="summary">
+        <p style="font-weight: normal; float: left">Showing {{from}} - {{to}} of {{totalRecords}} records</p>
+      </ng-template>
+  </p-table>
+
+  <p-dialog [closable]="false" header="Delete Customer" [(visible)]="deleteDisplay" [modal]="true" [responsive]="true"
+            [width]="500" [minWidth]="200" [minY]="70"
+            [maximizable]="true" [baseZIndex]="10000" appendTo="body">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <div class="ui-inputgroup">
+          Are you sure you want to delete this complain?
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <button type="button" pButton icon="pi pi-check" (click)="onDeleteSubmit()" label="Confirm"></button>
+      <button type="button" pButton icon="pi pi-times" (click)="closeDeleteDialog()" label="Cancel"
+              class="ui-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+</p-card>
+</div>

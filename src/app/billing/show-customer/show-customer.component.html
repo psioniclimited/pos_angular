@@ -1,0 +1,104 @@
+<div class="ui-g">
+  <div class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+    <p-card>
+      <div class="container" *ngIf="showCustomer">
+        <h3 style="text-align: center">Customer Data</h3>
+
+        <hr>
+
+        <ul class="alignMe">
+          <li><span>Name </span><span>{{showCustomer.name}}</span></li>
+          <li><span>Code </span><span>{{showCustomer.code}}</span></li>
+          <li><span>Email </span><span>{{showCustomer.email}}</span></li>
+          <li><span>Phone </span> <span >{{showCustomer.phone}}</span></li>
+          <li><span>NID </span> <span >{{showCustomer.nid}}</span></li>
+          <li><span>Address </span> <span >{{showCustomer.address}}</span></li>
+        </ul>
+
+        <hr>
+
+        <ul class="alignMe">
+          <li><span>Monthly Charge </span><span>{{showCustomer.monthly_bill}}</span></li>
+          <li><span>Due on </span><span>{{showCustomer.due_on}}</span></li>
+          <li><span>Subscription Type </span>
+            <span *ngIf="showCustomer.subscription_type_id == 1">Analog</span>
+            <span *ngIf="showCustomer.subscription_type_id == 2">Digital</span>
+            <span *ngIf="showCustomer.subscription_type_id == 3">Internet</span>
+          </li>
+          <li *ngIf="showCustomer.card_number != null"><span>Card Number </span><span>{{showCustomer.card_number}}</span></li>
+          <li><span>Status </span>
+            <span class="table-label table-label-ok" style="width: fit-content; width: -moz-fit-content" *ngIf="showCustomer.status == 1">Connected</span>
+            <span class="table-label table-label-danger" style="width: fit-content; width: -moz-fit-content" *ngIf="showCustomer.status == 2">Temporarily Disconnected</span>
+            <span class="table-label table-label-danger" style="width: fit-content; width: -moz-fit-content" *ngIf="showCustomer.status == 0">Disconnected</span>
+<!--            <span >{{showCustomer.status}}</span>-->
+          </li>
+          <li><span>Bill Collector </span>
+            <span *ngFor="let user of showCustomer.users;">{{user.name}}</span>
+          </li>
+          <li><span>Area </span> <span >{{showCustomer.area.name}}</span></li>
+          <li><span>Connections </span> <span >{{showCustomer.number_of_connections}}</span></li>
+          <li><span>Reference </span> <span >{{showCustomer.reference}}</span></li>
+        </ul>
+
+        <hr *ngIf="showCustomer.subscription_type_id == 3">
+
+        <ul class="alignMe" *ngIf="showCustomer.subscription_type_id == 3">
+          <li><span>Shared </span><span>{{showCustomer.shared}}</span></li>
+          <li><span>Bandwidth </span><span>{{showCustomer.bandwidth}}</span></li>
+          <li><span>PPOE </span><span>{{showCustomer.ppoe}}</span></li>
+
+        </ul>
+
+      </div>
+    </p-card>
+  </div>
+
+  <div class="ui-g-12">
+    <p-card>
+      <p-table
+        #dt
+        [columns]="cols"
+        [value]="billCollections"
+        [lazy]="true"
+        (onLazyLoad)="loadBillCollectionsLazy($event)"
+        [paginator]="true"
+        [rows]="30"
+        [rowsPerPageOptions]="[30, 60, 100]"
+        [totalRecords]="totalRecords"
+        [loading]="loading"
+        class="container"
+        [responsive]="true">
+
+        <ng-template pTemplate="caption">
+          <div style="text-align: right">
+            <i id="searchIcon" class="pi pi-search"></i>
+            <input type="text" pInputText size="30" placeholder="Global Filter"
+                   (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+              {{col.header}}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns" >
+              <span class="ui-column-title">{{col.header}}</span>
+              {{rowData[col.field]}}
+            </td>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <p style="font-weight: normal; float: left">Showing {{from}} - {{to}} of {{totalRecords}} records</p>
+        </ng-template>
+      </p-table>
+
+    </p-card>
+  </div>
+</div>

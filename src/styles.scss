@@ -1,0 +1,264 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+  background-color: #f4f4f4;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body app-home-layout{
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+//
+//body .ui-inputtext{
+//  font-size: 16px;
+//}
+//
+//body .ui-button-text{
+//  font-size: 16px;
+//}
+//
+//body .ui-fileupload .ui-fileupload-buttonbar .ui-button{
+//  background-color: #34bfa3;
+//  border-color: #34bfa3;
+//}
+//
+//.header-font {
+//  font-family: Montserrat;
+//}
+//
+//.sub-header-font{
+//  font-size: 18px;
+//}
+//
+.ui-button-icon-only {
+  padding: 1px;
+}
+
+.ui-splitbutton.ui-buttonset .ui-button{
+  padding: 1px;
+}
+
+.ui-menu .ui-menuitem-link {
+  text-align: left;
+}
+
+body .ui-multiselect .ui-multiselect-label, .ui-multiselect-panel .ui-multiselect-item label{
+  margin-bottom: 0;
+}
+
+body td .ui-button.ui-button-text-only .ui-button-text {
+  padding: 0.429em 0.6em;
+}
+
+body .ui-paginator .ui-dropdown{
+  height: auto;
+}
+
+th{
+  text-align: center;
+}
+
+.ui-fluid .ui-splitbutton .ui-button:first-child {
+  display: none;
+}
+//.ui-multiselect-label{
+//  text-align: center;
+//}
+//.ui-table-scrollable-header{
+//  overflow: inherit;
+//}
+
+
+//body p-calendar .ui-inputtext{
+//  width: 200% !important;
+//}
+//.ui-dialog .ui-dialog-content {
+//  height: 450px !important;
+//}
+body .ui-progressbar .ui-progressbar-value {
+  background: red;
+}
+
+body .ui-table .ui-table-summary{
+  display: table;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: 100%;
+}
+
+body .ui-paginator{
+  border-top: 0;
+}
+
+.pi-sort{
+  color: #8484848c;
+}
+
+.ui-column-title{
+  font-family: 'Montserrat', sans-serif;
+}
+
+th{
+  font-family: 'Montserrat', sans-serif;
+}
+
+small {
+  color: red;
+  padding-left: 3px;
+}
+
+#dashboard .ui-card{
+  border-top: 3px #007ad9 solid;
+}
+
+.ui-scrollable-body colgroup{
+  display: block;
+}
+
+#clearFilter {
+  margin-top: 30px;
+}
+
+.ui-fluid .ui-button{
+  width: auto;
+}
+
+table .ui-button {
+  margin: 3px 3px;
+  border-radius: 0.25rem;
+}
+
+p-table .ui-inputgroup{
+  display: inline-flex;
+}
+
+$input-focus-color: #007ad9;
+
+body .ui-inputtext {
+  border: 1px solid #ced4da;
+}
+
+body .ui-inputtext:enabled:focus:not(.ui-state-error) {
+  border-color: $input-focus-color;
+  color: #575962;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+body .ui-inputtext:enabled:hover:not(.ui-state-error), body .ui-autocomplete.ui-autocomplete-multiple .ui-autocomplete-multiple-container:not(.ui-state-disabled):hover, body .ui-dropdown:not(.ui-state-disabled):hover, #globalFilter:hover {
+  border-color: $input-focus-color;
+}
+
+body .ui-dropdown{
+  border: 1px solid #ced4da;
+}
+
+@media only screen and (max-width: 600px) {
+  #clearFilter {
+    margin-top: 20px;
+  }
+}
+
+#export{
+  float: left;
+}
+
+.table-label{
+  font-size: 12px;
+  border-radius: 2rem;
+  //height: 0;
+  width: auto;
+  padding: 0.1rem 0.5rem;
+}
+
+.table-label-danger{
+  color: #fff;
+  background: #fd397a;
+}
+
+.table-label-ok{
+  color: #fff;
+  background: #0abb87;
+}
+
+.table-label-header{
+  color: #fff;
+  background: darkblue;
+}
+
+#globalFilter {
+  border: 1px solid #ced4da;
+}
+
+// for footer
+//html {
+//  position: relative;
+//  min-height: 100%;
+//}
+//
+//body {
+//  /* Margin bottom by footer height */
+//  margin-bottom: 60px;
+//}
+
+#dashboard .ui-card{
+  background-color: white;
+}
+
+#dash_customer .ui-card{
+  background-color: #2980b9;
+  color: white;
+}
+
+#dash_collection .ui-card {
+  background-color: #16a085;
+  color: white;
+}
+
+#dash_due .ui-card{
+  background-color: #c0392b;
+  color: white;
+}
+
+#dash_expense .ui-card{
+  background-color: #f39c12;
+  color: white;
+}
+
+#dash_fee .ui-card{
+  background-color: #9b59b6;
+  color: white;
+}
+
+#searchIcon {
+  margin:0px 4px 0 0;
+  vertical-align: middle;
+}
+
+#table-delete:hover{
+  color: white;
+  background-color: #fd397a;
+  border: 1px solid #fd397a;
+}
+
+body .ui-tooltip .ui-tooltip-text {
+  background-color: #efefef;
+  color: grey;
+}
+
+app-sign-up{
+  height: 937px;
+}
+
+app-login-layout{
+  height: 937px;
+  background-color: white;
+}
+
+app-journal-list .ui-table .ui-table-tbody > tr > td {
+  border: 0px;
+}

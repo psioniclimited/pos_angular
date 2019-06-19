@@ -1,0 +1,22 @@
+<p-card >
+  <form class="container ui-fluid" [formGroup]="subscriptionTypeForm" (ngSubmit)="onSubmit()" >
+    <label *ngIf="id;else create_subscription" for="name">Edit Subscription Type</label>
+    <ng-template #create_subscription>Create Subscription Type</ng-template>
+    <hr>
+    <div class="ui-g form-group ">
+      <div class="ui-md-12 ui-g-12 ">
+        <label for="name">Name</label>
+        <input type="text" id="name" class="form-control"
+               pInputText placeholder="Enter name"
+               name="name" formControlName="name" [(ngModel)]="editSubscriptionType.name">
+        <small *ngIf="!subscriptionTypeForm.controls['name'].valid && subscriptionTypeForm.controls['name'].touched">
+          Name is required
+        </small>
+      </div>
+      <button class="submit-color" name="basic" pButton type="submit"  label="Submit"></button>
+      <button class="cancel-color" name="basic" pButton type="button" label="Cancel"></button>
+    </div>
+  </form>
+</p-card>
+
+

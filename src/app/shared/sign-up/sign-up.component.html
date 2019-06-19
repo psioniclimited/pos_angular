@@ -1,0 +1,247 @@
+<!--<div class="ui-g">-->
+<!--  <p-card class="ui-lg-8 ui-lg-offset-2 ui-g-12">-->
+<!--  <form class="container ui-fluid" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">-->
+<!--    <div style="text-align: center">-->
+<!--      <h2>Psionic Billing Application</h2>-->
+<!--    </div>-->
+
+<!--    <br><br>-->
+
+<!--    <h4>Company Details</h4>-->
+<!--    <hr>-->
+
+<!--  <div class="ui-grid">-->
+<!--    <div class="ui-md-4 ui-g-12">-->
+<!--      <label>Company Name</label>-->
+<!--      <input type="text" id="name" class="form-control"-->
+<!--             pInputText placeholder="Enter company name"-->
+<!--              formControlName="companyName">-->
+<!--      <small *ngIf="!signUpForm.controls['companyName'].valid && signUpForm.controls['companyName'].touched">-->
+<!--        Company Name is required-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    <div class="ui-md-4 ui-g-12">-->
+<!--      <label>Company Phone</label>-->
+<!--      <input type="number" class="form-control"-->
+<!--             pInputText placeholder="Enter company phone"-->
+<!--              formControlName="companyPhone">-->
+<!--      <small *ngIf="!signUpForm.controls['companyPhone'].valid && signUpForm.controls['companyPhone'].touched">-->
+<!--        Company Phone is required-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    <div class="ui-md-4 ui-g-12">-->
+<!--      <label>Company Address</label>-->
+<!--      <input type="text" class="form-control"-->
+<!--             pInputText placeholder="Enter company address"-->
+<!--             formControlName="companyAddress">-->
+<!--      <small *ngIf="!signUpForm.controls['companyAddress'].valid && signUpForm.controls['companyAddress'].touched">-->
+<!--        Company Address is required-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    <div class="ui-g-12">-->
+<!--      <br><br>-->
+<!--      <h4>Admin Details</h4>-->
+<!--      <hr>-->
+<!--    </div>-->
+
+
+<!--    <div class="ui-md-6 ui-g-12">-->
+<!--      <label>Admin Name</label>-->
+<!--      <input type="text" class="form-control"-->
+<!--             pInputText placeholder="Enter admin name"-->
+<!--              formControlName="adminName">-->
+<!--      <small *ngIf="!signUpForm.controls['adminName'].valid && signUpForm.controls['adminName'].touched">-->
+<!--        Admin name is required-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    <div class="ui-md-6 ui-g-12">-->
+<!--      <label>Admin Email</label>-->
+<!--      <input type="text" class="form-control"-->
+<!--             pInputText placeholder="Enter admin email"-->
+<!--              formControlName="adminEmail">-->
+<!--      <small *ngIf="!signUpForm.controls['adminEmail'].valid && signUpForm.controls['adminEmail'].touched">-->
+<!--        Admin email is required-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    <div class="ui-md-6 ui-g-12">-->
+<!--      <label>Password</label>-->
+<!--      <input type="password"-->
+<!--             class="form-control"-->
+<!--             pInputText pPassword placeholder="Password"-->
+<!--             name="password" formControlName="adminPassword">-->
+<!--      <small *ngIf="!signUpForm.controls['adminPassword'].valid && signUpForm.controls['adminPassword'].touched">-->
+<!--        Admin Password is required-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash;<div style="width:800px; margin:0 auto;">&ndash;&gt;-->
+
+<!--    <div class="ui-md-6 ui-g-12">-->
+<!--      <label>Confirm Password</label>-->
+<!--      <input type="password"-->
+<!--             pPassword-->
+<!--             class="form-control"-->
+<!--             pInputText-->
+<!--             placeholder="Confirm password"-->
+<!--             formControlName="adminPassword_confirm"-->
+<!--      >-->
+<!--      <small *ngIf="!signUpForm.controls['adminPassword_confirm'].valid && signUpForm.controls['adminPassword_confirm'].touched">-->
+<!--        Please confirm password-->
+<!--      </small>-->
+<!--    </div>-->
+
+<!--    <div class="ui-g-12">-->
+<!--      <button class="submit-color" name="basic" pButton type="submit" label="Submit"></button>-->
+<!--      <button class="cancel-color" name="basic" pButton type="button" label="Cancel" (click)="onCancel()"></button>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--  </form>-->
+<!--</p-card>-->
+<!--</div>-->
+<p-toast position="top-right"></p-toast>
+<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="sign-up-body">
+  <div class="container">
+
+    <br><br>
+
+    <div class="row">
+      <div class="col-12 col-sm-6 order-2 order-sm-1" align="center" style="margin-top: 20%; padding-right: 17%">
+        <img src="assets/img/landing_logo.jpg" alt="" height="160px">
+        <br><br>
+<!--        <h6>Plan, track, and release world-class software</h6>-->
+        <br>
+        <img src="assets/img/logo.png" alt="">
+      </div>
+
+      <div class="col-12 col-sm-5 order-1 order-sm-2">
+        <h4>Sign Up</h4>
+        <hr>
+
+        <div class="ui-fluid">
+
+          <div class="ui-g-12">
+            <label>Company Name</label>
+            <input type="text" id="name" class="form-control"
+                   pInputText placeholder="Enter company name"
+                   formControlName="companyName">
+            <small *ngIf="!signUpForm.controls['companyName'].valid && signUpForm.controls['companyName'].touched">
+              Company Name is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12">
+            <label>Company Phone</label>
+            <input type="number" class="form-control"
+                   pInputText placeholder="Enter company phone"
+                   formControlName="companyPhone">
+            <small *ngIf="!signUpForm.controls['companyPhone'].valid && signUpForm.controls['companyPhone'].touched">
+              Company Phone is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12 ">
+            <label>Company Address</label>
+            <input type="text" class="form-control"
+                   pInputText placeholder="Enter company address"
+                   formControlName="companyAddress">
+            <small
+              *ngIf="!signUpForm.controls['companyAddress'].valid && signUpForm.controls['companyAddress'].touched">
+              Company Address is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12 ">
+            <label>Select Plan</label>
+            <p-dropdown
+              [style]="{'width':'100% !important'}"
+              [options]="plans"
+              placeholder="Select Plan"
+              optionLabel="name"
+              [showClear]="true"
+              id="plan"
+              name="plan"
+              formControlName="pricing_plan_id"></p-dropdown>
+            <small
+              *ngIf="!signUpForm.controls['pricing_plan_id'].valid && signUpForm.controls['pricing_plan_id'].touched">
+              Plan is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12 ">
+            <label>Admin Name</label>
+            <input type="text" class="form-control"
+                   pInputText placeholder="Enter admin name"
+                   formControlName="adminName">
+            <small *ngIf="!signUpForm.controls['adminName'].valid && signUpForm.controls['adminName'].touched">
+              Admin name is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12 ">
+            <label>Admin Email</label>
+            <input type="text" class="form-control"
+                   pInputText placeholder="Enter admin email"
+                   formControlName="adminEmail">
+            <small *ngIf="!signUpForm.controls['adminEmail'].valid && signUpForm.controls['adminEmail'].touched">
+              Admin email is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12">
+            <label>Password</label>
+            <input type="password"
+                   class="form-control"
+                   pInputText pPassword placeholder="Password"
+                   name="password" formControlName="adminPassword">
+            <small *ngIf="!signUpForm.controls['adminPassword'].valid && signUpForm.controls['adminPassword'].touched">
+              Admin Password is required
+            </small>
+          </div>
+
+          <br>
+          <br>
+
+          <div class="ui-g-12 ">
+            <label>Confirm Password</label>
+            <input type="password"
+                   pPassword
+                   class="form-control"
+                   pInputText
+                   placeholder="Confirm password"
+                   formControlName="adminPassword_confirm">
+            <small
+              *ngIf="!signUpForm.controls['adminPassword_confirm'].valid && signUpForm.controls['adminPassword_confirm'].touched">
+              Please confirm password
+            </small>
+          </div>
+          <br>
+        </div>
+        <button [disabled]="loading" class="submit-color" name="basic" pButton type="submit" label="Agree and Sign up"></button>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+<p-card class="ui-lg-4 ui-lg-offset-4 ui-g-12">
+  <div *ngIf="user | async as user">
+    <h3 style="text-align: center">User Profile</h3>
+
+    <hr>
+
+    <ul class="alignMe">
+      <li><span>User name </span><span>{{user.name}}</span></li>
+      <li><span>User email </span><span>{{user.email}}</span></li>
+      <li><span>User Roles </span> <span *ngFor="let userRole of user.roles">{{userRole.display_name}}</span></li>
+      <li><span>User Status</span> <span *ngIf="user.active === true">Active</span> <span *ngIf="user.active === false">Inactive</span></li>
+    </ul>
+
+    <hr>
+
+    <ul class="alignMe">
+      <li><span>Company ID </span><span>{{user.company.id}}</span></li>
+      <li><span>Company name </span><span>{{user.company.name}}</span></li>
+      <li><span>Company phone </span><span>{{user.company.phone}}</span></li>
+      <li><span>Company address </span><span>{{user.company.address}}</span></li>
+      <li><span>Valid To </span><span>{{user.company.valid_to | date}}</span></li>
+    </ul>
+
+    <hr>
+
+    <ul class="alignMe">
+      <li><span>Pricing Plan</span> <span>{{user.company.pricing_plan.name}}</span></li>
+      <li><span>Price</span><span>BDT {{user.company.pricing_plan.price | number}}</span></li>
+      <li><span>Customer Limit</span><span> {{user.company.pricing_plan.customer_limit}}</span></li>
+      <li><span>User Limit</span><span> {{user.company.pricing_plan.user_limit}}</span></li>
+    </ul>
+  </div>
+</p-card>

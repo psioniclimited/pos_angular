@@ -1,0 +1,237 @@
+<div class="ui-g">
+  <p-card class="ui-g-12">
+    <div class="ui-g ui-fluid">
+      <div class="ui-g-12">
+        <h4>Internet Customer List</h4>
+        <hr>
+      </div>
+
+      <p-card class="ui-g-12 ui-lg-3" id="dash_collection">
+        <h5 class="">Monthly Target Bill</h5>
+        <hr>
+        <h6>BDT {{targetBill?.toLocaleString('en-IN') | number}}</h6>
+      </p-card>
+
+      <div class="ui-g-0 ui-lg-9"></div>
+
+      <div class="ui-lg-3 ui-g-12">
+        <label>Area Filter</label>
+        <p-autoComplete
+          #areaDropdown
+          placeholder="Area Filter"
+          [(ngModel)]="areaFilter"
+          [suggestions]="areas"
+          field="name"
+          (completeMethod)="getAreas($event)"
+          (onSelect)="$event.id ? dt.filter($event.id, 'area', 'equals') : dt.filter('', 'area', 'equals');"
+          [forceSelection]="true"
+          [size]="30"
+          [dropdown]="true"
+          [showTransitionOptions]="'0ms'"
+        ></p-autoComplete>
+      </div>
+
+      <div class="ui-lg-3 ui-g-12">
+        <label>Status Filter</label>
+        <p-dropdown
+          #statusDropdown
+          [(ngModel)]="statusFilter"
+          [showClear]="true"
+          [options]="connectionStatus"
+          optionLabel="name"
+          placeholder="Status Filter"
+          [style]="{'width':'100%'}"
+          (onChange)="$event.value ? dt.filter($event.value.id, 'status', 'equals'): dt.filter('', 'status', 'equals')">
+        </p-dropdown>
+      </div>
+
+      <div class="ui-lg-3 ui-g-12">
+        <label>Bill Collector Filter</label>
+        <p-autoComplete
+          #collectorDropdown
+          placeholder="Bill Collector Filter"
+          [(ngModel)]="collectorFilter"
+          [suggestions]="billCollectors"
+          field="name"
+          (completeMethod)="getBillCollectors($event)"
+          (onSelect)="$event.id ? dt.filter($event.id, 'collector', 'equals') : dt.filter('', 'collector', 'equals');"
+          [forceSelection]="true"
+          [size]="30"
+          [dropdown]="true"
+          [showTransitionOptions]="'0ms'"
+        ></p-autoComplete>
+      </div>
+      <div class="ui-lg-3 ui-g-12">
+        <button id="clearFilter" pButton type="submit" label="Clear Filters" (click)="dt.reset(); clearFilters()"></button>
+      </div>
+
+    </div>
+    <p-table
+      #dt
+      [columns]="cols"
+      [value]="customers"
+      [lazy]="true"
+      (onLazyLoad)="loadCustomersLazy($event)"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10,20,30]"
+      [totalRecords]="totalRecords"
+      [loading]="loading"
+      [responsive]="true"
+      [scrollable]="scrollable"
+    >
+
+      <ng-template pTemplate="caption"e>
+        <div style="text-align: right">
+          <button id="export" pButton type="submit" icon="pi pi-file" label="Export CSV" (click)="this.generateReport(this.reportTypes.csv)"></button>
+          <!--<p-splitButton id="export" label="Save" icon="pi pi-file" (onClick)="save('info')" [model]="items" ></p-splitButton>-->
+
+          <i id="searchIcon" class="pi pi-search"></i>
+          <div class="ui-inputgroup" style="width: 307px; text-align: left">
+            <p-dropdown
+              [(ngModel)]="selectGlobalFilter"
+              [options]="globalFiltersArray"
+              optionLabel="name"
+              placeholder="Global"
+              [style]="{'width':'100%'}"
+              (onChange)="clearGlobal()"
+              style="width: 100px">
+            </p-dropdown>
+            <input id="globalFilter" type="text" pInputText size="25" placeholder="Global Filter" [(ngModel)]="globalFilter"
+                   (input)="search($event);" style="width:auto;">
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template pTemplate="colgroup" let-columns>
+        <colgroup *ngIf="scrollable">
+          <col *ngFor="let col of columns" style="width:150px">
+          <col style="width: 150px">
+        </colgroup>
+      </ng-template>
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+          <th>
+            Action
+          </th>
+        </tr>
+        <tr>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <tr>
+          <td>
+            <span class="ui-column-title">Code</span>
+            {{rowData['code']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Name</span>
+            {{rowData['name']}}
+          </td>
+
+          <td>
+            <span class="ui-column-title">Phone</span>
+            {{rowData['phone']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Area</span>
+            {{rowData['area']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Address</span>
+            {{rowData['address']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Shared</span>
+            {{rowData['shared']}}
+          </td>
+          <td>
+            <span class="ui-column-title">PPOE</span>
+            {{rowData['ppoe']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Bandwidth</span>
+            {{rowData['bandwidth']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Status</span>
+            <ng-container [ngSwitch]="true">
+              <div *ngSwitchCase="rowData['status'] == 1">
+                <span class="table-label table-label-ok">Connected</span>
+              </div>
+              <div *ngSwitchCase="rowData['status'] == 2">
+                <span class="table-label table-label-danger">T. Disconnected</span>
+              </div>
+              <div *ngSwitchCase="rowData['status'] == 3">
+                <span class="table-label table-label-ok">Free</span>
+              </div>
+              <div *ngSwitchDefault>
+                <span class="table-label table-label-danger">Disconnected</span>
+              </div>
+            </ng-container>
+<!--            <div *ngIf="rowData['status']==1;then connected else disconnected"></div>-->
+<!--            <ng-template #connected>-->
+<!--              <span class="table-label table-label-ok">Connected</span>-->
+<!--            </ng-template>-->
+<!--            <ng-template #disconnected>-->
+<!--              <span class="table-label table-label-danger">Disconnected</span>-->
+<!--            </ng-template>-->
+            <!--{{rowData['status']}}-->
+          </td>
+          <td>
+            <span class="ui-column-title">Collectors</span>
+            {{rowData['users_name']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Due on</span>
+            {{rowData['due_on'] | date: 'MMM yyyy'}}
+          </td>
+          <td>
+            <span class="ui-column-title">Monthly Bill</span>
+            {{rowData['monthly_bill']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Total Due</span>
+            {{rowData['total_due']}}
+          </td>
+          <td>
+            <span class="ui-column-title">Actions</span>
+            <a [routerLink]="['/internet-customer/' + rowData.id + '/edit']">
+              <button class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-pencil" (click)="editCustomer(rowData.id)" label="Edit"></button>
+            </a>
+            <a [routerLink]="['/customer/' + rowData.id]">
+              <button class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-eye" (click)="viewCustomer(rowData.id)"></button>
+            </a>
+            <button id="table-delete" class="ui-button-secondary" name="basic" pButton type="button" icon="pi pi-trash" (click)="showDeleteDialog(rowData.id)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <p style="font-weight: normal; float: left">Showing {{from}} - {{to}} of {{totalRecords}} records</p>
+      </ng-template>
+    </p-table>
+
+    <p-dialog [closable]="false" header="Delete Customer" [(visible)]="deleteDisplay" [modal]="true" [responsive]="true"
+              [width]="500" [minWidth]="200" [minY]="70"
+              [maximizable]="true" [baseZIndex]="10000" appendTo="body">
+      <div class="ui-g ui-fluid">
+        <div class="ui-g-12">
+          <div class="ui-inputgroup">
+            Are you sure you want to delete this customer?
+          </div>
+          <small>*All bill collections corresponding to this customer will be deleted as well.</small>
+        </div>
+      </div>
+      <p-footer>
+        <button type="button" pButton icon="pi pi-check" (click)="onDeleteSubmit()" label="Confirm"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="closeDeleteDialog()" label="Cancel"
+                class="ui-button-secondary"></button>
+      </p-footer>
+    </p-dialog>
+  </p-card>
+</div>

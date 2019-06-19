@@ -1,0 +1,60 @@
+<form class="" [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+
+<p-dialog header="Title"
+          [(visible)]="display"
+          [modal]="true"
+          [responsive]="true"
+          [width]="800"
+          [minWidth]="200"
+          [minY]="70"
+          [maximizable]="true"
+          [baseZIndex]="10000">
+
+  <div class="ui-md-12 ui-g-12">
+    <label class="sub-header-font" for="name">Name</label>
+        <input
+          id="name"
+          type="text"
+          class="form-control"
+          formControlName="name"
+          pInputText
+          placeholder="Enter name">
+    <small *ngIf="!accountForm.controls['name'].valid && accountForm.controls['name'].touched">
+      Name is required
+    </small>
+  </div>
+  <div class="ui-md-12 ui-g-12">
+    <label class="sub-header-font" for="label_desc">Label Description</label>
+    <input type="text"
+           id="label_desc"
+           class="form-control"
+           pInputText
+           placeholder="Enter label description"
+           name="label_desc"
+           formControlName="description">
+    <small *ngIf="!accountForm.controls['description'].valid && accountForm.controls['description'].touched">
+      Description is required
+    </small>
+  </div>
+  <div class="ui-md-12 ui-g-12">
+    <label class="sub-header-font" for="balance">Starting Balance</label>
+    <input type="text"
+           id="balance"
+           class="form-control"
+           pInputText
+           placeholder="Enter starting balance"
+           name="balance"
+           formControlName="starting_balance">
+    <small *ngIf="!accountForm.controls['starting_balance'].valid && accountForm.controls['starting_balance'].touched">
+      Starting balance is required
+    </small>
+  </div>
+  <p-footer>
+    <button type="submit" pButton icon="pi pi-check"  label="Submit"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="display=false" label="Cancel" class="ui-button-secondary"></button>
+  </p-footer>
+
+</p-dialog>
+</form>
+
+<button type="text" (click)="showDialog()" pButton icon="pi pi-plus" label="Add"></button>

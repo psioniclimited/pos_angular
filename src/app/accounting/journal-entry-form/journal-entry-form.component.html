@@ -1,0 +1,117 @@
+<form [formGroup]="journalForm" (ngSubmit)="onSubmit()" class="ui-g">
+<p-card class="ui-lg-10 ui-lg-offset-1 ui-g-12">
+    <div class="ui-g ui-fluid">
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <h5>Transaction Date</h5>
+        <p-calendar
+        dateFormat="dd/mm/yy"
+        [showIcon]="true"
+        placeholder="Transaction date"
+        formControlName="transaction_date"></p-calendar>
+
+        <small *ngIf="!journalForm.controls['transaction_date'].valid && journalForm.controls['transaction_date'].touched">
+          Transaction Date is required
+        </small>
+      </div>
+
+
+      <div class="ui-g-0 ui-md-6 ui-lg-8"></div>
+
+<!--      <br><br><br><br><br>-->
+
+      <div class="ui-g-12 ui-md-6 ui-lg-4">
+        <h5>Note</h5>
+        <input
+          type="text"
+          class="form-control"
+          pInputText
+          placeholder="Enter Note"
+          formControlName="note">
+        <small *ngIf="!journalForm.controls['note'].valid && journalForm.controls['note'].touched">
+          Note is required
+        </small>
+      </div>
+
+      <div class="ui-g-0 ui-md-6 ui-lg-8"></div>
+
+<!--      <br><br><br><br><br>-->
+
+      <div class="ui-g-4">
+        <h5>Accounts</h5>
+        <p-dropdown [options]="allAccounts"
+                    placeholder="Select Debit Account"
+                    optionLabel="name"
+                    [showClear]="true"
+                    [style]="{'width':'100%'}"
+                    filter="true"
+                    formControlName="debitAccount"
+        >
+        </p-dropdown>
+        <small *ngIf="!journalForm.controls['debitAccount'].valid && journalForm.controls['debitAccount'].touched">
+          Debit Account is required
+        </small>
+      </div>
+
+      <div class="ui-g-4">
+        <h5>Debit</h5>
+        <input
+          type="number"
+          class="form-control"
+          pInputText
+          placeholder="Enter Debit"
+          pKeyFilter="pint"
+          formControlName="debit"
+          (input)="calculateCredit($event.target.value)"
+        >
+        <small *ngIf="!journalForm.controls['debit'].valid && journalForm.controls['debit'].touched">
+          Debit is required
+        </small>
+      </div>
+
+      <div class="ui-g-4">
+        <h5>Credit</h5>
+
+      </div>
+
+      <div class="ui-g-4">
+        <!--credit account-->
+        <p-dropdown [options]="allAccounts"
+                    placeholder="Select Credit Account"
+                    optionLabel="name"
+                    [showClear]="true"
+                    [style]="{'width':'100%'}"
+                    filter="true"
+                    formControlName="creditAccount"
+        >
+        </p-dropdown>
+        <small *ngIf="!journalForm.controls['creditAccount'].valid && journalForm.controls['creditAccount'].touched">
+          Credit Account is required
+        </small>
+      </div>
+
+
+      <div class="ui-g-4 ui-g-offset-4">
+        <!--Credit-->
+        <input
+          readonly
+          type="number"
+          class="form-control"
+          pInputText
+          placeholder="Enter Credit"
+          pKeyFilter="pint"
+          formControlName="credit"
+        >
+        <small *ngIf="!journalForm.controls['credit'].valid && journalForm.controls['credit'].touched">
+          Credit is required
+        </small>
+      </div>
+
+    </div>
+
+    <div id="buttons">
+      <button class="" pButton type="submit" label="Submit"></button>
+      <button class="ui-button-secondary" pButton label="Cancel" (click)="onCancel()"></button>
+    </div>
+  </p-card>
+</form>

@@ -1,0 +1,56 @@
+form textarea {
+  width: -webkit-fill-available;
+  width: -moz-available;
+  width: stretch;
+}
+
+hr {
+  margin-top: 15px;
+}
+
+p-button {
+  padding: 10px;
+}
+
+form .ui-button {
+  margin: 10px;
+  padding: 4px;
+  border-radius: 0.25rem;
+  width: auto;
+  height: fit-content;
+}
+
+//form .ui-inputtext.ng-dirty.ng-invalid{
+//  border: 1px solid #ced4da;
+//}
+
+//form .submit-color {
+//  background-color: #5867dd;
+//  border-color: #5867dd;
+//}
+//
+//form .submit-color:hover {
+//  background-color: #384ad7;
+//  border-color: #2e40d4;
+//}
+//
+//form .submit-color:active {
+//  background-color: #2e40d4;
+//  border-color: #293ccc;
+//}
+//
+//form .cancel-color {
+//  color: #212529;
+//  background: white;
+//  border-color: #ebedf2;
+//}
+//
+//form .cancel-color:hover {
+//  border-color: #ebedf2;
+//  background-color: #f4f5f8;
+//}
+//
+//form .cancel-color:active {
+//  background-color: #ccd1de;
+//  border-color: #c4cad9;
+//}

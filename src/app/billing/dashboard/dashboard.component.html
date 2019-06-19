@@ -1,0 +1,212 @@
+<div id="dashboard" style="background-color: white">
+  <div class="ui-g">
+    <p-card class="ui-g-12 ui-md-3" id="dash_customer">
+      <h5 class="">Customers</h5>
+      <hr>
+      <h6 class="">Dish Customers: {{dish_customers}}</h6>
+      <h6 class="">Internet Customers: {{internet_customers}}</h6>
+      <h6 class="">Customer Limit: {{customer_limit}}</h6>
+    </p-card>
+    <p-card class="ui-g-12 ui-md-3" id="dash_collection">
+      <h5 class="">This Month's Collection</h5>
+      <hr>
+      <h6>BDT {{this_month_collection?.toLocaleString('en-IN')}}</h6>
+    </p-card>
+    <p-card class="ui-g-12 ui-md-3" id="dash_due">
+      <h5 class="">Total Due</h5>
+      <hr>
+      <h6>BDT {{customer_due?.toLocaleString('en-IN') | number}}</h6>
+    </p-card>
+    <p-card class="ui-g-12 ui-md-3" id="dash_expense">
+      <h5 class="">Total Expenses</h5>
+      <hr>
+      <h6>BDT {{total_expense?.toLocaleString('en-IN') | number}}</h6>
+    </p-card>
+
+    <p-card class="ui-g-12">
+      <h5>Quick Links</h5>
+      <hr>
+      <a [routerLink]="['/customer/create']">
+        <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-user-plus"
+                label="New Customer"></button>
+      </a>
+
+      <a [routerLink]="['/internet-customer/create']">
+        <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-user-plus"
+                label="New Internet Customer"></button>
+      </a>
+
+      <a [routerLink]="['/area']">
+        <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-globe"
+                label="Create Area"></button>
+      </a>
+
+      <a [routerLink]="['/customer/collect-bill']">
+        <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-dollar"
+                label="Collect Bill"></button>
+      </a>
+
+      <a [routerLink]="['/customer/bill-collection']">
+        <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-chart-bar"
+                label="Dish Bill Collection"></button>
+      </a>
+
+      <a [routerLink]="['/internet-customer/bill-collection']">
+        <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-chart-bar"
+                label="Internet Bill Collection"></button>
+      </a>
+
+      <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-file"
+              label="Monthly Report" (click)="generateReport(reportTypes.pdf, 'monthly_report', thisMonthDate)"></button>
+
+      <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-file"
+              label="Daily Report" (click)="generateReport(reportTypes.pdf, 'daily_report', todayDate)"></button>
+
+      <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-file"
+              label="Yesterday's Report" (click)="generateReport(reportTypes.pdf, 'daily_report', yesterdayDate)"></button>
+<!--      <button class="ui-button-secondary quick-links" name="basic" pButton type="button" icon="pi pi-file"-->
+<!--              label="Internet Monthly Report" (click)="generateReport(reportTypes.pdf, thisMonthDate)"></button>-->
+    </p-card>
+
+    <p-card class="ui-md-6 ui-g-12">
+      <br>
+      <h5>Daily Collection</h5>
+      <hr>
+      <p-chart type="bar" [data]="dailyBill" height="40vh"></p-chart>
+    </p-card>
+
+    <p-card class="ui-md-6 ui-g-12">
+      <br>
+      <h5>Connections and Disconnections ({{currentMonthHeader}})</h5>
+      <hr>
+      <p-tabMenu [model]="connectedItems" [activeItem]="connectedActiveItem"></p-tabMenu>
+      <br>
+      <p-table
+        #dt
+        [columns]="connectedCols"
+        [value]="customers"
+        [lazy]="true"
+        (onLazyLoad)="loadConnectedLazy($event)"
+        [paginator]="true"
+        [rows]="6"
+        [rowsPerPageOptions]="[6,10,15,20]"
+        [loading]="connectedLoading"
+        [totalRecords]="connectedTotalRecords"
+        [responsive]="true"
+      >
+        <!--        <ng-template pTemplate="caption">-->
+        <!--          <div style="text-align: right">-->
+        <!--            <button id="export" pButton type="submit" icon="pi pi-file" label="Export CSV" (click)="this.generateReport(this.reportTypes.csv)"></button>-->
+        <!--            <p-splitButton id="export" label="Save" icon="pi pi-file" (onClick)="save('info')" [model]="rankingItems" ></p-splitButton>-->
+
+        <!--            <i id="searchIcon" class="pi pi-search"></i>-->
+
+        <!--              <input id="globalFilter" type="text" pInputText size="25" placeholder="Global Filter" [(ngModel)]="globalFilter"-->
+        <!--                     (input)="search($event);" style="width:auto;">-->
+        <!--          </div>-->
+        <!--        </ng-template>-->
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <span class="ui-column-title">{{col.header}}</span>
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <p style="font-weight: normal; float: left">Showing {{connectedFrom}} - {{connectedTo}}
+            of {{connectedTotalRecords}} records</p>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+
+    <p-card class="ui-md-6 ui-g-12">
+      <br>
+      <h5>Last Three Months Collections</h5>
+      <hr>
+      <p-chart type="bar" [data]="targetBill" height="40vh"></p-chart>
+    </p-card>
+
+    <p-card class="ui-md-6 ui-g-12">
+      <br>
+      <h5>Collector Ranking</h5>
+      <hr>
+      <p-tabMenu [model]="rankingItems" [activeItem]="rankingActiveItem"></p-tabMenu>
+      <br>
+      <p-table
+        #dt
+        [columns]="rankingCols"
+        [value]="collectors"
+        [lazy]="true"
+        (onLazyLoad)="loadRankingLazy($event)"
+        [paginator]="true"
+        [rows]="6"
+        [rowsPerPageOptions]="[6,10,15,20]"
+        [loading]="rankingLoading"
+        [totalRecords]="rankingTotalRecords"
+        [responsive]="true"
+      >
+        <!--        <ng-template pTemplate="caption">-->
+        <!--          <div style="text-align: right">-->
+        <!--            <button id="export" pButton type="submit" icon="pi pi-file" label="Export CSV" (click)="this.generateReport(this.reportTypes.csv)"></button>-->
+        <!--            <p-splitButton id="export" label="Save" icon="pi pi-file" (onClick)="save('info')" [model]="rankingItems" ></p-splitButton>-->
+
+        <!--            <i id="searchIcon" class="pi pi-search"></i>-->
+
+        <!--              <input id="globalFilter" type="text" pInputText size="25" placeholder="Global Filter" [(ngModel)]="globalFilter"-->
+        <!--                     (input)="search($event);" style="width:auto;">-->
+        <!--          </div>-->
+        <!--        </ng-template>-->
+
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columns">
+              {{col.header}}
+            </th>
+          </tr>
+          <tr>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowData let-columns="columns">
+          <tr>
+            <td *ngFor="let col of columns">
+              <span class="ui-column-title">{{col.header}}</span>
+              <span *ngIf="rowData[col.field] == null">0</span>
+              {{rowData[col.field]}}
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+          <p style="font-weight: normal; float: left">Showing {{rankingFrom}} - {{rankingTo}} of {{rankingTotalRecords}}
+            records</p>
+        </ng-template>
+      </p-table>
+    </p-card>
+
+    <p-card class="ui-md-6 ui-g-12">
+      <br>
+      <h5>Area Wise Collection</h5>
+      <hr>
+      <p-chart type="pie" [data]="areaBill" height="40vh"></p-chart>
+    </p-card>
+
+<!--    <p-card class="ui-md-6 ui-g-12">-->
+<!--      <br>-->
+<!--      <h5>Collector Performance</h5>-->
+<!--      <hr>-->
+<!--      <p-chart type="line" [data]="collectorPerformance" height="40vh"></p-chart>-->
+<!--    </p-card>-->
+  </div>
+
+</div>

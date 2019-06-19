@@ -1,0 +1,231 @@
+<header id="header">
+  <div class="relative_position">
+    <!-- <div class="search-input"><i class="fa fa-search icon-search"></i><input type="text"></div> -->
+    <a class="logo-container" href="#"><img alt="ecuador-layout" src="assets/img/DigiPay_Logo.png"></a>
+    <div href="#" id="topbar-profile-menu-button">
+      <div *ngIf="user">
+        <span class="table-label table-label-header platinum">
+          Current Plan: {{user.company.pricing_plan.name}}
+        </span>
+        <span class="table-label table-label-header">Days Remaining: {{validity}}</span>
+        <a href="https://play.google.com/store/apps/details?id=io.psionic.dgpay" target="_blank"
+           title="Download DgPay App"><img class="topbar-profile" src="assets/img/playstore.png"></a>
+        <a href="#" title="Pay through bKash"><img class="topbar-profile" src="assets/img/bkash.png"></a>
+        <!--<span>Jeniffer Reynolds</span><img alt="ecuador-layout" class="topbar-profile" src="assets/img/avatar.png"><i class="pi pi-angle-down"></i>-->
+      </div>
+    </div>
+  </div>
+  <nav id="navmenu" class="navbar navbar-expand-lg navbar-light bg-light mb-5 bg-white container-fluid">
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+            (click)="toggleNavbar()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" [ngClass]="{ 'show': navbarOpen }">
+      <ul class="navbar-nav pull_nav_left d-flex flex-wrap">
+<!--        <li class="nav-item ">-->
+<!--          <a class="nav-link" [routerLink]="['/dashboard']"><i class="pi pi-home"></i> <span-->
+<!--            class="nav_text">Dashboard</span></a>-->
+<!--        </li>-->
+        <!--<li class="nav-item ">-->
+          <!--<a class="nav-link" [routerLink]="['/order']"><i class="pi pi-home"></i> <span-->
+            <!--class="nav_text">Orders</span></a>-->
+        <!--</li>-->
+        <li class="nav-item  dropdown" appDropdown>
+          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="false">
+            <i class="pi pi-home"></i> <span class="nav_text">Orders</span> <i class="pi pi-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/order']"><i class="pi pi-user-plus"></i>Orders</a>
+            <a class="dropdown-item" [routerLink]="['/sales-report']"><i class="pi pi-users"></i>Sales Report</a>
+            <!--            <a class="dropdown-item" [routerLink]="['/area']"><i class="pi pi-globe"></i>Area</a>-->
+            <!--<a class="dropdown-item" [routerLink]="['/auth/permissions']"><i-->
+            <!--class="pi pi-lock"></i>Permission</a>-->
+            <!--            <a class="dropdown-item" [routerLink]="['/auth/profile']"><i class="pi pi-user"></i>Profile</a>-->
+          </div>
+        </li>
+<!--        <li class="nav-item  dropdown" appDropdown>-->
+<!--          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"-->
+<!--             aria-expanded="false">-->
+<!--            <i class="pi pi-user"></i> <span class="nav_text">Customer</span> <i class="pi pi-chevron-down"></i>-->
+<!--          </a>-->
+<!--          <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--            <a class="dropdown-item" [routerLink]="['/customer/create']"><i class="pi pi-user-plus"></i>New-->
+<!--              Customer</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/customer']"><i class="pi pi-users"></i>Customers</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/internet-customer/create']"><i class="pi pi-user-plus"></i>New-->
+<!--              Internet-->
+<!--              Customer</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/internet-customer']"><i class="pi pi-users"></i>Internet Customers</a><a-->
+<!--            class="dropdown-item" [routerLink]="['/complain/create']"><i class="pi pi-comment"></i>New Complain</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/complain']"><i class="pi pi-comments"></i>Complain List</a>-->
+<!--          </div>-->
+<!--        </li>-->
+
+<!--        <li class="nav-item  dropdown" appDropdown>-->
+<!--          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"-->
+<!--             aria-expanded="false">-->
+<!--            <i class="pi pi-money-bill"></i> <span class="nav_text">Dish Collection</span> <i-->
+<!--            class="pi pi-chevron-down"></i>-->
+<!--          </a>-->
+<!--          <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--            <a class="dropdown-item" [routerLink]="['/customer/collect-bill']"><i class="pi pi-dollar"></i>Collect-->
+<!--              Bill</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/customer/bill-collection']"><i class="pi pi-chart-bar"></i>Dish-->
+<!--              Bill Collection</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/customer-due-list']"><i class="pi pi-chart-bar"></i>Dish Customer-->
+<!--              Due-->
+<!--              List</a>-->
+
+<!--            <a class="dropdown-item" [routerLink]="['/refund-history']"><i class="pi pi-replay"></i>Dish Refund-->
+<!--              History</a>-->
+
+<!--            <a class="dropdown-item" [routerLink]="['/fee-types']"><i class="pi pi-chart-bar"></i>Other Fee Types</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/collect-fee']"><i class="pi pi-dollar"></i>Collect Other Fee</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/fee-collection']"><i class="pi pi-chart-bar"></i>Other Fee-->
+<!--              Collection List</a>-->
+<!--            &lt;!&ndash;            <a class="dropdown-item"><i class="pi pi-map-marker"></i>Map Report</a>&ndash;&gt;-->
+<!--          </div>-->
+<!--        </li>-->
+
+<!--        <li class="nav-item  dropdown" appDropdown>-->
+<!--          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"-->
+<!--             aria-expanded="false">-->
+<!--            <i class="pi pi-money-bill"></i> <span class="nav_text">Internet Collection</span> <i-->
+<!--            class="pi pi-chevron-down"></i>-->
+<!--          </a>-->
+<!--          <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--            <a class="dropdown-item" [routerLink]="['/customer/collect-bill']"><i class="pi pi-dollar"></i>Collect-->
+<!--              Bill</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/internet-customer/bill-collection']"><i-->
+<!--              class="pi pi-chart-bar"></i>Internet-->
+<!--              Bill Collection</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/internet-customer-due-list']"><i class="pi pi-chart-bar"></i>Internet-->
+<!--              Customer-->
+<!--              Due-->
+<!--              List</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/internet-refund-history']"><i class="pi pi-replay"></i>Internet-->
+<!--              Refund-->
+<!--              History</a>-->
+<!--          </div>-->
+<!--        </li>-->
+
+<!--        <li class="nav-item  dropdown" appDropdown>-->
+<!--          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"-->
+<!--             aria-expanded="false">-->
+<!--            <i class="pi pi-folder"></i> <span class="nav_text">Accounts</span> <i class="pi pi-chevron-down"></i>-->
+<!--          </a>-->
+<!--          <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--            <a class="dropdown-item" [routerLink]="['/expenses']"><i class="pi pi-chart-bar"></i>Expense List</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/chart-of-account/' + chartOfAccountRoute]"><i class="pi pi-chart-bar"></i>Chart Of Accounts</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/journals']"><i class="pi pi-folder"></i>Journal List</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/journal-entry']"><i class="pi pi-file"></i>Create Journal Entry</a>-->
+<!--            <a class="dropdown-item" pTooltip="Coming Soon"><i class="pi pi-lock"></i>Accounting Reports</a>-->
+<!--            <a class="dropdown-item" pTooltip="Coming Soon"><i class="pi pi-lock"></i>Inventory Management</a>-->
+<!--          </div>-->
+<!--        </li>-->
+
+        <li class="nav-item  dropdown" appDropdown>
+          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+             aria-expanded="false">
+            <i class="pi pi-cog"></i> <span class="nav_text">Admin</span> <i class="pi pi-chevron-down"></i>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/auth/create']"><i class="pi pi-user-plus"></i>New User</a>
+            <a class="dropdown-item" [routerLink]="['/auth/users']"><i class="pi pi-users"></i>All Users</a>
+            <a class="dropdown-item" [routerLink]="['/auth/roles']"><i class="pi pi-key"></i>Roles</a>
+<!--            <a class="dropdown-item" [routerLink]="['/area']"><i class="pi pi-globe"></i>Area</a>-->
+            <!--<a class="dropdown-item" [routerLink]="['/auth/permissions']"><i-->
+            <!--class="pi pi-lock"></i>Permission</a>-->
+<!--            <a class="dropdown-item" [routerLink]="['/auth/profile']"><i class="pi pi-user"></i>Profile</a>-->
+          </div>
+        </li>
+
+<!--        <li class="nav-item  dropdown" appDropdown>-->
+<!--          <a class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"-->
+<!--             aria-expanded="false">-->
+<!--            <i class="pi pi-info"></i> <span class="nav_text">Help</span> <i class="pi pi-chevron-down"></i>-->
+<!--          </a>-->
+<!--          <div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--            <a href="http://bit.ly/digipayusermanual" target="_blank" class="dropdown-item"><i-->
+<!--              class="pi pi-question"></i>User Manual</a>-->
+<!--            <a href="http://bit.ly/digipayvideos" target="_blank" class="dropdown-item"><i class="pi pi-video"></i>Videos</a>-->
+<!--          </div>-->
+<!--        </li>-->
+
+        <!--<li class="nav-item  dropdown">-->
+        <!--<a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--<i class="fas fa-cog"></i> <span class="nav_text"> Layouts </span><i class="fas fa-angle-down"></i>-->
+        <!--</a>-->
+        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+        <!--<a class="dropdown-item" href="#">Action</a>-->
+        <!--<a class="dropdown-item" href="#">Another action</a>-->
+        <!--<div class="dropdown-divider"></div>-->
+        <!--<a class="dropdown-item" href="#">Something else here</a>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="nav-item  dropdown">-->
+        <!--<a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--<i class="fas fa-paint-brush"></i> <span class="nav_text"> Themes </span> <i class="fas fa-angle-down"></i>-->
+        <!--</a>-->
+        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+        <!--<a class="dropdown-item" href="#">Action</a>-->
+        <!--<a class="dropdown-item" href="#">Another action</a>-->
+        <!--<div class="dropdown-divider"></div>-->
+        <!--<a class="dropdown-item" href="#">Something else here</a>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="nav-item  dropdown">-->
+        <!--<a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--<i class="fas fa-bars"></i> <span class="nav_text"> Components </span><i class="fas fa-angle-down"></i>-->
+        <!--</a>-->
+        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+        <!--<a class="dropdown-item" href="#">Action</a>-->
+        <!--<a class="dropdown-item" href="#">Another action</a>-->
+        <!--<div class="dropdown-divider"></div>-->
+        <!--<a class="dropdown-item" href="#">Something else here</a>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="nav-item  dropdown">-->
+        <!--<a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--<i class="fas fa-cube"></i> <span class="nav_text">Pages</span> <i class="fas fa-angle-down"></i>-->
+        <!--</a>-->
+        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+        <!--<a class="dropdown-item" href="#">Action</a>-->
+        <!--<a class="dropdown-item" href="#">Another action</a>-->
+        <!--<div class="dropdown-divider"></div>-->
+        <!--<a class="dropdown-item" href="#">Something else here</a>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="nav-item  dropdown">-->
+        <!--<a class="nav-link " href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--<i class="fas fa-cube"></i> <span class="nav_text">Hierarchy </span><i class="fas fa-angle-down"></i>-->
+        <!--</a>-->
+        <!--<div class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+        <!--<a class="dropdown-item" href="#">Action</a>-->
+        <!--<a class="dropdown-item" href="#">Another action</a>-->
+        <!--<div class="dropdown-divider"></div>-->
+        <!--<a class="dropdown-item" href="#">Something else here</a>-->
+        <!--</div>-->
+        <!--</li>-->
+        <!--<li class="nav-item ">-->
+        <!--<a class="nav-link" href="#"><i class="fas fa-cube"></i> Documentation</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item ">-->
+        <!--<a class="nav-link" href="#"><i class="fas fa-cube"></i> Buy Now</a>-->
+        <!--</li>-->
+      </ul>
+
+    </div>
+    <ul class="navbar-nav pull_nav_left d-flex flex-wrap">
+      <li class="nav-item ">
+        <a class="nav-link" (click)="onLogout()"><i class="pi pi-sign-out"></i> <span
+          class="nav_text" style="font-weight: bold">Logout</span></a>
+      </li>
+    </ul>
+  </nav>
+</header><!-- /header -->
+
