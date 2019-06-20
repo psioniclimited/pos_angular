@@ -10,9 +10,9 @@
           <li><span>Client Name </span><span>{{showClient.name}}</span></li>
           <li><span>Client Age </span><span>{{showClient.age}}</span></li>
           <li><span>Client Email </span><span>{{showClient.email}}</span></li>
-          <li><span>Client Phone </span> <span >{{showClient.phone}}</span></li>
-          <li><span>Client Address </span> <span >{{showClient.address}}</span></li>
-          <li><span>Client Discount </span> <span >{{showClient.discount}}%</span></li>
+          <li><span>Client Phone </span> <span>{{showClient.phone}}</span></li>
+          <li><span>Client Address </span> <span>{{showClient.address}}</span></li>
+          <li><span>Client Discount </span> <span>{{showClient.discount}}%</span></li>
         </ul>
 
       </div>
@@ -40,35 +40,63 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-columns="columns">
           <tr>
-            <td *ngFor="let col of columns" [ngClass]="!col.subfield ? 'align_right' : null">
-              <div *ngIf="col.subfield; then nested_object_content else normal_content"></div>
-              <ng-template #nested_object_content>
-                <span class="ui-column-title">{{col.header}}</span>
-                  <span *ngIf="rowData[col.field]">{{rowData[col.field][col.subfield]}}</span>
-<!--                <span *ngIf="col.field">field {{rowData[col.field]}}</span>-->
-<!--                <span *ngIf="rowData[col.field] == null">null field</span>-->
-<!--                <span *ngIf="col.subfield">subfield</span>-->
-<!--                <span *ngIf="col.field">{{rowData[col.field][col.subfield]}}</span>-->
-              </ng-template>
-              <ng-template #normal_content>
-                <span class="ui-column-title">{{col.header}}</span>
-                {{rowData[col.field]}}
-              </ng-template>
-
-
-<!--              <span class="ui-column-title">{{col.header}}</span>-->
-<!--              <span>{{rowData[col.field]}}</span>-->
-<!--              <span *ngIf="rowData[col.field][col.subfield]">{{rowData[col.field][col.subfield]}}</span>-->
+            <td *ngIf="rowData['option']; else other_option">
+              <span class="ui-column-title">Option Type</span>
+              {{rowData['option']['type']}}
             </td>
+            <ng-template #other_option>
+              <td>
+                <span class="ui-column-title">Option Type</span>
 
+              </td>
+            </ng-template>
+            <td>
+              <span class="ui-column-title">Product Name</span>
+              {{rowData['product']['name']}}
+            </td>
+            <td>
+              <span class="ui-column-title">Quantity</span>
+              {{rowData['quantity']}}
+            </td>
+            <td *ngIf="rowData['addons']; else other_addon">
+              <span class="ui-column-title">Addons</span>
+              <!--{{ rowData['addons'] | json }}-->
+              <span *ngFor="let addon of rowData['addons']">{{ addon.name }}, </span>
+            </td>
+            <ng-template #other_addon>
+              <td>
+                <span class="ui-column-title">Addons</span>
+
+              </td>
+            </ng-template>
+            <td *ngIf="rowData['addons']; else other_addon_price">
+              <span class="ui-column-title">Addons Total Price</span>
+              {{ calculateAddonTotal(rowData['addons']) }}
+            </td>
+            <ng-template #other_addon_price>
+              <td>
+                <span class="ui-column-title">Addons Total Price</span>
+
+              </td>
+            </ng-template>
+            <td *ngIf="rowData['option']; else product_price">
+              <span class="ui-column-title">Product Price</span>
+              {{rowData['option']['price']}}
+            </td>
+            <ng-template #product_price>
+              <td>
+                <span class="ui-column-title">Product Price</span>
+                {{rowData['product']['sale_price']}}
+              </td>
+            </ng-template>
           </tr>
         </ng-template>
         <ng-template pTemplate="summary">
-<!--          <p style="font-weight: normal; float: right">Sub Total: {{subTotal}}</p>-->
-<!--          <br>-->
-<!--          <p style="font-weight: normal; float: right">Discount: {{showClient.discount}}%</p>-->
-<!--          <br>-->
-<!--          <p style="font-weight: normal; float: right">Total: {{calculatedTotal}}</p>-->
+          <!--          <p style="font-weight: normal; float: right">Sub Total: {{subTotal}}</p>-->
+          <!--          <br>-->
+          <!--          <p style="font-weight: normal; float: right">Discount: {{showClient.discount}}%</p>-->
+          <!--          <br>-->
+          <!--          <p style="font-weight: normal; float: right">Total: {{calculatedTotal}}</p>-->
           <ul class="smallAlignMe" style="text-align: right">
             <li><span>Sub Total </span><span>{{subTotal}}</span></li>
             <li><span>Discount </span><span>{{discount}}%</span></li>

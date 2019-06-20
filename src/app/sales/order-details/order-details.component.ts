@@ -6,6 +6,7 @@ import { Loader } from '../../_model/loader';
 import { LoaderService } from '../../shared/service/loader.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { OrderService } from '../service/order.service';
+import { _ } from 'underscore';
 
 @Component({
   selector: 'app-order-details',
@@ -20,6 +21,7 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
 
   orderDetails: any[];
   subTotal = 0;
+  discount = 0;
   calculatedTotal = 0;
   cols: any[];
   loading = true;
@@ -29,7 +31,8 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
     private loaderService: LoaderService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.cols = [
@@ -37,7 +40,9 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
       { field: 'option', subfield: 'type', header: 'Option Type' },
       { field: 'product', subfield: 'name', header: 'Product Name' },
       { field: 'quantity', header: 'Quantity' },
-      { field: 'total', header: 'Total' }
+      { field: 'addons', header: 'Addons' },
+      { field: 'addons_price', header: 'Addons Total Price' },
+      { field: 'total', header: 'Product Total' }
     ];
 
     this.route.params.subscribe((params: Params) => {
@@ -67,12 +72,25 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   calculateTotal() {
+    this.discount = this.showClient.discount;
     for (let i = 0; i < this.orderDetails.length; i++) {
       this.subTotal += Number(this.orderDetails[i].total);
+      if (this.orderDetails[i].addons.length > 0) {
+        for (let j = 0; j < this.orderDetails[i].addons.length; j++) {
+          this.subTotal += Number(this.orderDetails[i].addons[j].price) * Number(this.orderDetails[i].quantity);
+        }
+      }
     }
-
     const discountValue = (this.showClient.discount / 100) * this.subTotal;
     this.calculatedTotal = this.subTotal - discountValue;
+  }
+
+  calculateAddonTotal(addons) {
+    let sum = 0;
+    for (let i = 0; i < addons.length; i++) {
+      sum += parseFloat(addons[i].price);
+    }
+    return sum;
   }
 
   loadOrderDetailsLazy($event) {
